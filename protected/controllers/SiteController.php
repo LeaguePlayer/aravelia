@@ -2,7 +2,7 @@
 
 class SiteController extends FrontController
 {
-	public $layout = '//layouts/simple';
+	public $layout = '//layouts/main';
 	
 	/**
 	 * Declares class-based actions.
@@ -29,6 +29,10 @@ class SiteController extends FrontController
 	 */
 	public function actionIndex()
 	{
+        if($_FILES["xmlfile"]){
+            SiteHelper::parseXml($_FILES["xmlfile"]);
+        }
+
 		$this->render('index');
 	}
 

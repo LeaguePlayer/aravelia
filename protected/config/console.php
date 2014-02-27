@@ -5,16 +5,47 @@ return array_replace_recursive(
         'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
         'name'=>'Консоль',
         // preloading 'log' component
+        'import'=>array(
+            'application.models.*',
+            'application.components.*',
+            //'application.behaviors.*',
+        ),
+        'aliases'=>array(
+            'appext'=>'application.extensions',
+        ),
         'preload'=>array('log'),
+        'modules'=>array(
+            'admin'=>array(),
+            'email'=>array(),
+            'auth'=>array(),
+            'user'=>array(
+                'hash' => 'md5',
+                'sendActivationMail' => true,
+                'loginNotActiv' => false,
+                'activeAfterRegister' => false,
+                'autoLogin' => true,
+                'registrationUrl' => array('/user/registration'),
+                'recoveryUrl' => array('/user/recovery'),
+                'loginUrl' => array('/user/login'),
+                'returnUrl' => array('/user/profile'),
+                'returnLogoutUrl' => array('/user/login'),
+            ),
+        ),
         // application components
         'components'=>array(
-            'log'=>array(
-                'class'=>'CLogRouter',
-                'routes'=>array(
-                    array(
-                        'class'=>'CFileLogRoute',
-                        'levels'=>'error, warning',
-                    ),
+//            'log'=>array(
+//                'class'=>'CLogRouter',
+//                'routes'=>array(
+//                    array(
+//                        'class'=>'CFileLogRoute',
+//                        'levels'=>'error, warning',
+//                    ),
+//                ),
+//            ),
+            'clientScript'=>array(
+                'class'=>'EClientScript',
+                'scriptMap'=>array(
+                    //'jquery.min.js'=>'//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js',
                 ),
             ),
         ),

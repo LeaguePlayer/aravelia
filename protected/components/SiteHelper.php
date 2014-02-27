@@ -120,4 +120,169 @@ class SiteHelper {
 	    $message = str_replace("\n.", "\n..", $message);
         return mail($to,'=?UTF-8?B?'.base64_encode($subject).'?=',$message,$headers);
     }
+
+    /**
+     * Обрабатываем xml из 1С
+     */
+    public static function parseXml($file){
+        set_time_limit(300);
+        $start = microtime(true);
+
+        if($file["error"] != "0")
+            die("Произошла ошибка: ".$file["error"]);
+
+        if($file["type"] != "text/xml")
+            die("Файл должен быть в формате XML");
+
+        $xml = simplexml_load_file($file["tmp_name"]);
+
+        // обрабатываем производителей
+        $query = "";
+        foreach($xml->{"Производители"}->{"Производитель"} as $brand){
+            $attr = $brand->attributes();
+            $code = str_replace('"', "", trim($attr["Код"]));
+            $name = str_replace('"', "", trim($attr["Наименование"]));
+            $desc = str_replace('"', "", trim($attr["Описание"]));
+            $datetime = date("Y-m-d H:i:s");
+            $brand_row = Yii::app()->db->createCommand()->select()->from("tbl_brands")->where("code=:code", array(":code"=>$code))->queryRow();
+            if($brand_row){
+                if($brand_row["name"] != $name) {
+                    $query .= "UPDATE tbl_brands SET name='{$name}'";
+
+                    if(!empty($desc))
+                        $query .= ", wswg_desc='{$desc}'";
+
+                    $query .= ", update_time='{$datetime}' WHERE code='{$code}';";
+                }
+            }
+            else {
+                $query .= "INSERT INTO tbl_brands (code,name,wswg_desc, create_time, update_time) VALUES('{$code}','{$name}','{$desc}', '{$datetime}', '{$datetime}');";
+            }
+        }
+        if(!empty($query))
+            Yii::app()->db->createCommand($query)->execute();
+
+        // обрабатываем категории
+        $query = "";
+        foreach($xml->{"Категории"}->{"Категория"} as $cat){
+            $attr = $cat->attributes();
+            $code = str_replace('"', "", trim($attr["Код"]));
+            $name = str_replace('"', "", trim($attr["Наименование"]));
+            $datetime = date("Y-m-d H:i:s");
+            $cat_row = Yii::app()->db->createCommand()->select()->from("tbl_categories")->where("code=:code", array(":code"=>$code))->queryRow();
+            if($cat_row){
+                if($cat_row["name"] != $name) {
+                    $query .= "UPDATE tbl_categories SET name='{$name}', update_time='{$datetime}' WHERE code='{$code}';";
+                }
+            }
+            else {
+                $query .= "INSERT INTO tbl_categories (code,name,create_time,update_time) VALUES('{$code}','{$name}', '{$datetime}', '{$datetime}');";
+            }
+        }
+        if(!empty($query))
+            Yii::app()->db->createCommand($query)->execute();
+
+        // обрабатываем товары
+        $query = "";
+        $i = 0;
+        foreach($xml->{"Товары"}->{"Товар"} as $product){
+            $attr = $product->attributes();
+            $code = str_replace('"', "", trim($attr["Код"]));
+            $article = str_replace('"', "", trim($attr["Артикул"]));
+            $name = str_replace($article,"",trim($attr["Наименование"]));
+            $desc = str_replace('"', "", trim($attr["Описание"]));
+            $group = str_replace('"', "", trim($attr["ЦеноваяГруппа"]));
+            $country = str_replace('"', "", trim($attr["Страна"]));
+            $category_code = str_replace('"', "", trim($attr["КодКатегории"]));
+            $brand_code = str_replace('"', "", trim($attr["КодПроизводителя"]));
+            $datetime = date("Y-m-d H:i:s");
+            $product_row = Yii::app()->db->createCommand()->select()->from("tbl_products")->where("code=:code", array(":code"=>$code))->queryRow();
+            if($product_row){
+                $query .= "UPDATE tbl_products SET code='{$code}', article='{$article}', `name`='{$name}', `group`='{$group}', country='{$country}', category_code='{$category_code}', brand_code='{$brand_code}'";
+                if(!empty($desc)){
+                    $query .= ", wswg_desc='{$desc}'";
+                }
+
+                $query .= ", update_time='{$datetime}' WHERE code='{$code}';";
+            }
+            else {
+                $query .= "INSERT INTO tbl_products (code,article,name,wswg_desc,`group`,country,category_code,brand_code,create_time,update_time) VALUES('{$code}','{$article}','{$name}','{$desc}','{$group}','{$country}','{$category_code}','{$brand_code}','{$datetime}','{$datetime}');";
+            }
+            $i++;
+            if($i>10){
+                $i = 0;
+                if(!empty($query)) {
+                    Yii::app()->db->createCommand($query)->execute();
+                    $query = "";
+                }
+            }
+        }
+        if(!empty($query))
+            Yii::app()->db->createCommand($query)->execute();
+
+        // обрабатываем характеристики
+        $query = "";
+        $i = 0;
+        foreach($xml->{"Товары"}->{"Характеристика"} as $char){
+            $attr = $char->attributes();
+            $code = preg_replace('/[^0-9]/', '', trim($attr["Код"]));
+            $value = str_replace('"', "", trim($attr["Значение"]));
+            $value = str_replace('*', "-", $value);
+            $value = str_replace('/', "-", $value);
+            $value_from = preg_replace('/[^0-9-]/', '', $value);
+            $values = explode("-", $value_from);
+            $value_from = $values[0];
+            $value_to = (count($values) > 2) ? $values[count($values)-1] : $values[1];
+            $char_row = Yii::app()->db->createCommand()->select()->from("tbl_characteristics")->where("code=:code", array(":code"=>$code))->queryRow();
+            if($char_row){
+                if($char_row["value"] != $value || $char_row["value_to"] != $value_to)
+                    $query .= "UPDATE tbl_characteristics SET code='{$code}',`value`='{$value}',value_from='{$value_from}',value_to='{$value_to}' WHERE code='{$code}';";
+            }
+            else {
+                $query .= "INSERT INTO tbl_characteristics (code,`value`,value_from,value_to) VALUES('{$code}','{$value}','{$value_from}','{$value_to}');";
+            }
+            $i++;
+            if($i>10){
+                $i = 0;
+                if(!empty($query)) {
+                    Yii::app()->db->createCommand($query)->execute();
+                    $query = "";
+                }
+            }
+        }
+        if(!empty($query))
+            Yii::app()->db->createCommand($query)->execute();
+
+        // обрабатываем остатки
+        $query = "";
+        foreach($xml->{"Остатки"}->{"Остаток"} as $balans){
+            $attr = $balans->attributes();
+            $product_code = str_replace('"', "", trim($attr["КодТовара"]));
+            $char_code = preg_replace('/\s/', '', trim($attr["КодХарактеристики"]));
+            $char_code = preg_replace('/[^0-9]/', '', $char_code);
+            $price = preg_replace('/\s/', '', trim($attr["Цена"]));
+            $count = preg_replace('/\s/', '', trim($attr["Количество"]));
+            $balans_row = Yii::app()->db->createCommand()->select()->from("tbl_balances")->where(array("and", "product_code=:product_code", "characteristic_code=:char_code"), array(":product_code"=>$product_code,":char_code"=>$char_code))->queryRow();
+            if($balans_row){
+                if($balans_row["price"] != $price || $balans_row["count"] != $count) {
+                    $query .= "UPDATE tbl_balances SET ";
+                    if($balans_row["price"] != $price)
+                        $query_arr[] = "price='{$price}'";
+                    if($balans_row["count"] != $count)
+                        $query_arr[] = "count='{$count}'";
+                    $query .= implode(",", $query_arr);
+                    unset($query_arr);
+                    $query .= " WHERE product_code='{$product_code}' AND characteristic_code='{$char_code}';";
+                }
+            }
+            else {
+                $query .= "INSERT INTO tbl_balances (product_code,characteristic_code,price,`count`) VALUES('{$product_code}','{$char_code}', '{$price}', '{$count}');";
+            }
+        }
+        if(!empty($query))
+            Yii::app()->db->createCommand($query)->execute();
+
+        echo 'Время выполнения скрипта: '.(microtime(true) - $start).' сек.<br>';
+//        echo 'Время выполнения скрипта: '.(microtime(true) - $start).' сек.<br>';
+    }
 }
