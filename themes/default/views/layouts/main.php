@@ -401,5 +401,37 @@
     </div>
 </div>
 
+<!-- Модальное окно добавления товара в корзину -->
+<div id="modal-addProduct">
+    <div class="modal-header">
+        <div class="modal-title">Товар в корзине</div>
+    </div>
+    <div class="modal-content">
+        <p>
+            Теперь вы можете перейти в корзину для оформления заказа, либо продолжить покупки
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a href="/basket" class="more_button">Перейти в корзину</a>
+        <a href="#" onclick="$.modal.close(); return false;" class="more_button">Вернуться к покупкам</a>
+    </div>
+</div>
+
+<!-- Модальное окно добавления товара в избранное -->
+<div id="modal-addFavorite">
+    <div class="modal-header">
+        <div class="modal-title">Товар добавлен<br> в избранное</div>
+    </div>
+    <div class="modal-content">
+        <p>
+            Теперь вы можете перейти в корзину для просмотра избранных товаров, либо продолжить покупки
+        </p>
+    </div>
+    <div class="modal-footer">
+        <a href="/basket" class="more_button">Перейти в корзину</a>
+        <a href="#" onclick="$.modal.close(); return false;" class="more_button">Вернуться к покупкам</a>
+    </div>
+</div>
+
 </body>
 </html>

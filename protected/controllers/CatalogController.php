@@ -103,8 +103,6 @@ class CatalogController extends FrontController
         $data["page"] = $_GET["page"];
 
         $cs = Yii::app()->clientScript;
-        $cs->registerScriptFile($this->getAssetsUrl().'/js/jcarousellite.js', CClientScript::POS_END);
-        $cs->registerScriptFile($this->getAssetsUrl().'/js/min/viewed_carousel.min.js', CClientScript::POS_END);
         $cs->registerScriptFile($this->getAssetsUrl().'/js/min/filter.min.js', CClientScript::POS_END);
 
 		$this->render('index', $data);

@@ -1,4 +1,5 @@
 $(function(){
+    $(".product_img .fancybox").fancybox();
 
 	// табы информации товара
 	$(".tabs a").on("click", function(){
@@ -12,6 +13,15 @@ $(function(){
 
 	// запрещаем отправку формы, отправляем AJAXом
 	$("#form-product_add").on("submit", function(){
+        if($("#size").val() == "0"){
+            popover("Выберите ростовку", $("#size"));
+            $("#size").css("border-color", "#ff0000");
+            return false;
+        }
+        else {
+            $('#size').popover('destroy');
+            $("#size").css("border-color", "lightgray");
+        }
 		ajaxload();
 		setTimeout(function(){
 			$.modal.close();
@@ -25,15 +35,10 @@ $(function(){
 				focus: false,
 				autoResize: false
 			});
-			formsubmit();
-		},1000);
+			productAdd();
+		},500);
 		return false;
 	});
-
-	var formsubmit = function(){
-		//$(document).triggerHandler("changeProducts");
-		return;
-	};
 
 	// добавление/удаление товара в избранное
 	$("#addfavorite").on("click", function(){
@@ -50,10 +55,85 @@ $(function(){
 				focus: false,
 				autoResize: false
 			});
-			formsubmit();
-		},1000);
+            favoriteAdd();
+		},500);
 		return false;
 	});
+
+    // Добавляем товар в избранное
+    var favoriteAdd = function(){
+        var favorites = null,
+            product_id = $("input[name='product_id']").val();
+
+        if($.cookie("favorites"))
+            favorites = JSON.parse($.cookie("favorites"));
+
+        if(favorites != null){
+            favorites.forEach(function(val,i){
+                if(val.id == product_id) {
+                    return true;
+                }
+            });
+            favorites.push({
+                id: product_id
+            });
+        }
+        else {
+            favorites = new Array();
+            favorites[0] = {
+                id: product_id
+            };
+            $.cookie("favorites", JSON.stringify(favorites));
+        }
+    };
+
+    // Добавление товара в корзину
+    var productAdd = function(){
+
+        var products = null,
+            product_id = $("input[name='product_id']").val(),
+            characteristic_id = $("#size").val(),
+            price = $("#size option:selected").data("price");
+
+        if($.cookie("products"))
+            products = JSON.parse($.cookie("products"));
+
+        if(products != null){
+            products.forEach(function(val,i){
+                if(val.id == product_id) {
+                    return true;
+                }
+            });
+            products.push({
+                id: product_id,
+                count: 1,
+                price: price,
+                char: characteristic_id
+            });
+            $.cookie("products", JSON.stringify(products));
+        }
+        else {
+            products = new Array();
+            products[0] = {
+                id: product_id,
+                count: 1,
+                price: price,
+                char_id: characteristic_id
+            };
+            $.cookie("products", JSON.stringify(products));
+        }
+        $(document).triggerHandler("changeProducts");
+    }
+
+    var popover = function(text, el) {
+        el.popover("destroy");
+        el.popover({
+            animation: true,
+            placement: 'top',
+            trigger: 'hover',
+            content: text
+        });
+    };
 
 
 });

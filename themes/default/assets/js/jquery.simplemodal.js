@@ -718,7 +718,7 @@
 ajaxload = function() {
 	if(("#modal-loader").length>0)
 		$("#modal-loader").remove();
-	$("body").append("<div id='modal-loader'><img src='img/ajax-loader.gif'></div>");
+	$("body").append("<div id='modal-loader'><img src='/media/images/ajax-loader.gif'></div>");
 	$.modal.close();
 	$("#modal-loader").modal({
 		minHeight: 93,

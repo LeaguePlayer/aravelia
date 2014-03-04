@@ -18,4 +18,11 @@ $(function(){
 
 	$(".viewed-carousel-items").jCarouselLite(options);
 
+    // клилк по ссылке очистить все
+    $("#clear_viewed").on("click", function(){
+        $.cookie("see_products", null);
+        $(this).parent("section").hide(700);
+        return false;
+    });
+
 });

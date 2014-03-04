@@ -12,19 +12,19 @@ return array(
         ),
     ),
     'components' => array(
-//        'log'=>array(
-//            'class'=>'CLogRouter',
-//            'routes'=>array(
-//                array(
-//                    'class'=>'CFileLogRoute',
-//                    'levels'=>'error, warning',
-//                ),
-//                array(
-//                    'class'=>'CWebLogRoute',
-//                    'levels'=>'error, warning, trace, profile, info',
-//                    'enabled'=>true,
-//                ),
-//            ),
-//        ),
+        'log'=>array(
+            'class'=>'CLogRouter',
+            'routes'=>array(
+                array(
+                    'class'=>'CFileLogRoute',
+                    'levels'=>'error, warning',
+                ),
+                array(
+                    'class'=>'CWebLogRoute',
+                    'levels'=>'error, warning, trace, profile, info',
+                    'enabled'=>true,
+                ),
+            ),
+        ),
     ),
 );

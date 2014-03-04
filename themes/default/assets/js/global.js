@@ -37,9 +37,8 @@ $(function(){
 	});
 
 	$(document).ready(function(){
-		//basketInfo();
-		console.log(navigator.appName);
-		//alert($.browser.msie);
+		basketInfo();
+
 		/* Placeholder for IE */
 	    if(navigator.appName === "Microsoft Internet Explorer") { // Условие для вызова только в IE
 	        $("form").find("input[type='text']").each(function() {
@@ -70,7 +69,10 @@ $(function(){
 	});
 
 	var basketInfo = function() {
-		var products = JSON.parse($.cookie("products"));
+        var products = null;
+        if($.cookie("products"))
+		    products = JSON.parse($.cookie("products"));
+
 		if(products !== null) {
 			// считаем количество и цену товара
 			var count = 0, // количество товаров

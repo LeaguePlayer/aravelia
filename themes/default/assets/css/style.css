@@ -567,6 +567,7 @@ footer .footer-wrap .adress {
 }
 .content .page.left.product {
   width: 630px;
+  min-height: 720px;
 }
 .content .page.right {
   margin-left: 20px;
@@ -697,6 +698,20 @@ footer .footer-wrap .adress {
   float: left;
   width: 320px;
   overflow: hidden;
+}
+.product .product_img > a {
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    margin-top: 5px;
+    margin-right: 3px;
+}
+.product .product_img > a:first-child {
+    margin-top: 0;
+    margin-right: 0;
+}
+.product .product_img > a:last-child {
+    margin-right: 0;
 }
 .product .product_feature {
   float: left;

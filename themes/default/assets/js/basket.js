@@ -1,26 +1,5 @@
 $(function(){
 
-	/////////////////////////////////////////////////////////////////////
-	// временно пишем в куки
-	var products = new Array();
-	products[0] = {
-		id: 1,
-		count: 1,
-		price: 1100
-	};
-	products[1] = {
-		id: 2,
-		count: 1,
-		price: 1200
-	};
-	products[2] = {
-		id: 3,
-		count: 1,
-		price: 1300
-	};
-	$.cookie("products", JSON.stringify(products));
-	//////////////////////////////////////////////////////////////////
-
 	// считаем итоговую цену
 	$(document).ready(function(){
 		$(".price_all_products span").html(number_format(priceSumm(), 0, '.', ' '));
