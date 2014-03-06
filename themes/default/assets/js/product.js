@@ -1,4 +1,24 @@
 $(function(){
+
+    $(document).ready(function(){
+        // проверяем есть ли товар в избранных
+        var favorites = null,
+            product_id = $("input[name='product_id']").val();
+
+        if($.cookie("favorites"))
+            favorites = JSON.parse($.cookie("favorites"));
+
+        if(favorites != null){
+            favorites.forEach(function(val,i){
+                if(val.id == product_id) {
+                    $("#addfavorite").addClass("favorite");
+                    $("#addfavorite").html("Удалить из избранных");
+                }
+            });
+        }
+    });
+
+
     $(".product_img .fancybox").fancybox();
 
 	// табы информации товара
@@ -43,6 +63,18 @@ $(function(){
 	// добавление/удаление товара в избранное
 	$("#addfavorite").on("click", function(){
 		ajaxload();
+        $_this = $(this);
+        if($(this).is(".favorite")){
+            setTimeout(function(){
+                $_this.removeClass("favorite");
+                favoriteDel();
+                $_this.html("Добавить в избранное");
+                $.modal.close();
+            }, 500);
+            return false;
+        }
+        $(this).addClass("favorite");
+        $(this).html("Удалить из избранных");
 		setTimeout(function(){
 			$.modal.close();
 			$("#modal-addFavorite").modal({
@@ -77,13 +109,35 @@ $(function(){
             favorites.push({
                 id: product_id
             });
+            $.cookie("favorites", JSON.stringify(favorites), {expires: 30});
         }
         else {
             favorites = new Array();
             favorites[0] = {
                 id: product_id
             };
+            $.cookie("favorites", JSON.stringify(favorites), {expires: 30});
+        }
+    };
+
+    // удаляем товар из избранного
+    var favoriteDel = function() {
+        var favorites = null,
+            product_id = $("input[name='product_id']").val();
+
+        if($.cookie("favorites"))
+            favorites = JSON.parse($.cookie("favorites"));
+
+        if(favorites != null && favorites.length > 1){
+            favorites.forEach(function(val,i){
+                if(val.id == product_id) {
+                     favorites = favorites.slice(i-1,i);
+                }
+            });
             $.cookie("favorites", JSON.stringify(favorites));
+        }
+        else {
+            $.cookie("favorites", null);
         }
     };
 
@@ -92,7 +146,7 @@ $(function(){
 
         var products = null,
             product_id = $("input[name='product_id']").val(),
-            characteristic_id = $("#size").val(),
+            balans_id = $("#size").val(),
             price = $("#size option:selected").data("price");
 
         if($.cookie("products"))
@@ -108,7 +162,7 @@ $(function(){
                 id: product_id,
                 count: 1,
                 price: price,
-                char: characteristic_id
+                balans_id: balans_id
             });
             $.cookie("products", JSON.stringify(products));
         }
@@ -118,7 +172,7 @@ $(function(){
                 id: product_id,
                 count: 1,
                 price: price,
-                char_id: characteristic_id
+                balans_id: balans_id
             };
             $.cookie("products", JSON.stringify(products));
         }

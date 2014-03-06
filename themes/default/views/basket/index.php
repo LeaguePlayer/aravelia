@@ -1,9 +1,15 @@
 <?php
 /* @var $this BasketController */
+$this->title = "Ваша корзина товаров";
 ?>
-<section class="content width">
+<?
+if(!Yii::app()->request->isAjaxRequest)
+    echo '<section class="content width">';
+?>
     <h1>Ваша корзина</h1>
     <div class="basket page">
+        <? if($products != null): ?>
+        <form action="" method="post">
         <table id="basket-list">
             <thead>
             <tr>
@@ -15,38 +21,24 @@
             </tr>
             </thead>
             <tbody>
+            <?
+                $price = 0;
+                foreach($products as $p):
+                    $price += $p["price"];
+            ?>
             <tr>
                 <td class="img_product"><img src="/media/images/item6.jpg" width="40" height="40"></td>
-                <td class="link_product"><a href="#">Футболка коллекционная</a></td>
-                <td class="feature_product">Серая, XXL</td>
+                <td class="link_product"><a target="_blank" href="/product?id=<?=$p["id"]?>"><?=$p["name"]?></a></td>
+                <td class="feature_product"><?=$p["group"]?>, <?=$p["country"]?>, <?=$p["value"]?></td>
                 <td class="count_product">
-                    <input type="text" name="count[1]" data-id="1" data-price="1100" value="1"> шт.
+                    <input type="text" name="count[<?=$p["id"]?>]" data-id="<?=$p["id"]?>" data-balans="<?=$p["bid"]?>" data-price="<?=$p["price"]?>" data-count="<?=$p["count"]?>" value="1"> шт.
                 </td>
-                <td class="price_product"><span>1 100</span> руб.</td>
-                <td class="del_product"><a data-id="1" title="Удалить" href="#"></a></td>
+                <td class="price_product"><span><?=$p["price"]?></span> руб.</td>
+                <td class="del_product"><a data-id="<?=$p["id"]?>" title="Удалить" href="#"></a></td>
             </tr>
+            <? endforeach; ?>
             <tr>
-                <td class="img_product"><img src="/media/images/item6.jpg" width="40" height="40"></td>
-                <td class="link_product"><a href="#">Футболка коллекционная</a></td>
-                <td class="feature_product">Серая, XXL</td>
-                <td class="count_product">
-                    <input type="text" name="count[2]" data-id="2" data-price="1200" value="1"> шт.
-                </td>
-                <td class="price_product"><span>1 200</span> руб.</td>
-                <td class="del_product"><a data-id="2" title="Удалить" href="#"></a></td>
-            </tr>
-            <tr>
-                <td class="img_product"><img src="/media/images/item6.jpg" width="40" height="40"></td>
-                <td class="link_product"><a href="#">Футболка коллекционная</a></td>
-                <td class="feature_product">Серая, XXL</td>
-                <td class="count_product">
-                    <input type="text" name="count[3]" data-id="3" data-price="1300" value="1"> шт.
-                </td>
-                <td class="price_product"><span>1 300</span> руб.</td>
-                <td class="del_product"><a data-id="3" title="Удалить" href="#"></a></td>
-            </tr>
-            <tr>
-                <td class="price_all_products" colspan="5">Итого: <span>18 454</span> руб.</td>
+                <td class="price_all_products" colspan="5">Итого: <span><?=$price?></span> руб.</td>
                 <td></td>
             </tr>
             </tbody>
@@ -59,5 +51,22 @@
             </p>
             <div class="clearfix"></div>
         </div>
+        <? else: ?>
+            <p>В вашей корзине товаров нет.</p>
+        <? endif; ?>
     </div>
-</section>
+    </form>
+<?
+if(!Yii::app()->request->isAjaxRequest)
+    echo '</section>';
+?>
+
+<?
+if(!Yii::app()->request->isAjaxRequest)
+    $this->widget('application.components.favorite.favoriteWidget');
+?>
+
+<?
+if(!Yii::app()->request->isAjaxRequest)
+    $this->widget('application.components.see_products.seeProducts');
+?>

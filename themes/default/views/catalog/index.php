@@ -1,5 +1,6 @@
 <?php
 /* @var $this CatalogController */
+$this->title = "Каталог товаров";
 ?>
 <section class="content width">
     <h1>Одежда для малышей, <?=$_GET["char"]?> см.</h1>

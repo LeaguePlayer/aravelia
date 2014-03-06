@@ -1,5 +1,6 @@
 <?php
 /* @var $this ProductController */
+$this->title = $product["name"];
 ?>
 
 <section class="content width">

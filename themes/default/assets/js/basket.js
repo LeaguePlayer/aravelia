@@ -1,12 +1,17 @@
 $(function(){
 
 	// считаем итоговую цену
-	$(document).ready(function(){
+	$(document).on("ready", function(){
 		$(".price_all_products span").html(number_format(priceSumm(), 0, '.', ' '));
 	});
 
 	// считаем итоговую цену при изменении количества товара
 	$(".count_product input").on("change", function(){
+        if($(this).val() > $(this).data("count")) {
+            $(this).val($(this).data("count"));
+            popover("В наличии на складе: " + $(this).data("count"), $(this));
+        }
+
 		if($(this).val() < 1)
 			$(this).val(1);
 		$(this).parent().next(".price_product").children("span").html(number_format($(this).val()*$(this).data("price"), 0, '.', ' '));
@@ -210,7 +215,8 @@ $(function(){
 			products[index] = {
 				id: $(element).data("id"),
 				count: $(element).val(),
-				price: $(element).data("price")
+				price: $(element).data("price"),
+              balans_id: $(element).data("balans")
 			};
 		});
 		$.cookie("products", JSON.stringify(products));
