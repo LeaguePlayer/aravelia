@@ -12,5 +12,4 @@ $this->menu=array(
 <h2>Создание раздела сайта</h2>
 <?php echo $this->renderPartial('_form', array(
     'model'=>$model,
-    'parent'=>$parent
 )); ?>

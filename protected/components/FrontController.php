@@ -7,6 +7,8 @@ class FrontController extends Controller
 {
     public $layout='//layouts/simple';
     public $menu=array();
+    public $mainMenu=array();
+    public $subMenu=array();
     public $breadcrumbs=array();
     public $cat = array();
 
@@ -61,6 +63,7 @@ class FrontController extends Controller
         }
 
         $this->cat = $cat;
+        $this->buildMenu();
     }
 
     //Check home page

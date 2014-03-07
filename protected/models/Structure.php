@@ -20,12 +20,6 @@
 */
 class Structure extends EActiveRecord
 {
-    private $_parent;
-    public function setParent(Structure $model = null)
-    {
-        $this->_parent = $model;
-    }
-
     public function tableName()
     {
         return '{{structure}}';
@@ -37,25 +31,13 @@ class Structure extends EActiveRecord
         return array(
             array('name, url', 'required'),
             array('url', 'match', 'pattern' => '/^[\w_-]+$/', 'message' => 'Разрешены только символы латинского алфавита и знак подчеркивания.'),
-            array('url', 'url_unique'),
+            array('url', 'unique'),
             array('material_id, level, lft, rgt, seo_id, status, sort', 'numerical', 'integerOnly'=>true),
             array('name, url', 'length', 'max'=>255),
             array('create_time, update_time', 'safe'),
             // The following rule is used by search().
             array('id, name, material_type, material_id, url, level, lft, rgt, seo_id, status, sort, create_time, update_time', 'safe', 'on'=>'search'),
         );
-    }
-
-
-    public function url_unique($attribute, $params)
-    {
-        $url = $this->url;
-        if ( $this->_parent ) {
-            $this->url = $this->_parent->url.'/'.$this->url;
-        }
-        $validator = CValidator::createValidator('unique', $this, $attribute, $params);
-        $validator->validate($this, $attribute);
-        $this->url = $url;
     }
 
 
@@ -173,21 +155,15 @@ class Structure extends EActiveRecord
     }
 
 
-    private $_url;
     public function getUrl()
     {
-        if ( $this->_url === null ) {
-            $this->_url = Yii::app()->createUrl('structure/show', array('url'=>$this->url));
-        }
-        return $this->_url;
-
-//        if ( $this->isRoot() )
-//            return '/';
-//        $component = $this->getComponent();
-//        if ( !$component )
-//            return '';
-//        $component_name = strtolower(get_class($component));
-//        return Yii::app()->createUrl($component_name.'/view', array('url'=>$this->url));
+        if ( $this->isRoot() )
+            return '/';
+        $component = $this->getComponent();
+        if ( !$component )
+            return '';
+        $component_name = strtolower(get_class($component));
+        return Yii::app()->createUrl($component_name.'/view', array('url'=>$this->url));
     }
 
     public function getBreadcrumbs()

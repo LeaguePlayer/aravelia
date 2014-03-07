@@ -8,14 +8,12 @@ class StructureController extends AdminController
     {
         $model = new Structure;
         $parent = Structure::model()->findByPk($parent_id);
-        $model->parent = $parent;
 
         if ( isset($_POST['Structure']) ) {
             $model->attributes = $_POST['Structure'];
             $success = $model->validate();
             if ( $success ) {
                 if ( $parent ) {
-                    $model->url = $parent->url.'/'.$model->url;
                     $model->appendTo($parent, false);
                 } else {
                     $model->saveNode(false);
@@ -27,7 +25,6 @@ class StructureController extends AdminController
         $this->layout = '/layouts/admin_columns';
         $this->render('create', array(
             'model' => $model,
-            'parent' => $parent
         ));
     }
 
@@ -39,22 +36,12 @@ class StructureController extends AdminController
             throw new CHttpException(404, 'Раздел не найден');
         }
 
-        $mathes = array();
-        preg_match('/[\w_]+$/', $model->url, $mathes);
-        $model->url = $mathes[0];
-
-        $parent = $model->parent()->find();
-        $model->parent = $parent;
-
         $oldMaterialId = $model->material_id;
         if ( isset($_POST['Structure']) ) {
             $model->attributes = $_POST['Structure'];
 
             $success = $model->validate();
             if ( $success ) {
-                if ( $parent ) {
-                    $model->url = $parent->url.'/'.$model->url;
-                }
                 if ( $model->saveNode(false) ) {
                     if ( $model->material_id !== $oldMaterialId ) {
                         $component = $model->getComponent();
@@ -72,7 +59,6 @@ class StructureController extends AdminController
         $this->layout = '/layouts/admin_columns';
         $this->render('update', array(
             'model' => $model,
-            'parent' => $parent
         ));
     }
 

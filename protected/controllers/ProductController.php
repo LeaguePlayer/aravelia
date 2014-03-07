@@ -9,22 +9,20 @@ class ProductController extends FrontController
         if(!is_numeric($id))
             throw new CHttpException(400, "Неверные параметры запроса");
 
-        $data["product"] = Yii::app()->db->createCommand()
-            ->select("*")
-            ->from("tbl_products")
-            ->where("id=:id",array(":id"=>$id))
-            ->queryRow();
+        $data["model"] = Product::model()->findByPk($id);
 
-        if(!$data["product"])
+        if(!$data["model"])
             throw new CHttpException(404, "Страница не найдена");
 
         $data["sizes"] = Yii::app()->db->createCommand()
             ->select("b.id,b.price,b.count,c.value,c.value_from")
             ->from("tbl_balances as b")
             ->leftJoin("tbl_characteristics as c", "b.characteristic_code=c.code")
-            ->where("b.product_code='{$data["product"]["code"]}'", array(":p.code"=>$data["product"]["code"]))
+            ->where("b.product_code='{$data["model"]->code}'")
             ->order("c.value_from ASC")
             ->queryAll();
+
+        $data["photos"] = $data["model"]->getGalleryPhotos();
 
         $cs = Yii::app()->clientScript;
         $cs->registerCssFile($this->getAssetsUrl().'/css/fancybox/jquery.fancybox.css');

@@ -26,15 +26,23 @@ class PageController extends FrontController
 	}
 
 	
-	public function actionView($id)
+	public function actionView($url)
 	{
-        if($id==3){
+        $data = array();
+
+        $node = Structure::model()->findByUrl($url);
+        if($node)
+            $data["model"] = $node->getComponent();
+        else
+            throw new CHttpException(404);
+
+        if($node->id==3){
             $this->layout = "//layouts/landing";
         }
 
-		$this->render('view',array(
-			'model'=>$this->loadModel('Page', $id),
-		));
+        $this->title = $node->name;
+
+		$this->render('view', $data);
 	}
 
 	

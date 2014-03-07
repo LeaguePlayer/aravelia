@@ -12,7 +12,6 @@
             'content' => $this->renderPartial('_general_inputs', array(
                 'form'=>$form,
                 'model'=>$model,
-                'parent'=>$parent
             ), true),
             'active' => true
         ),

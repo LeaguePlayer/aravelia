@@ -29,11 +29,20 @@ class SiteController extends FrontController
 	 */
 	public function actionIndex()
 	{
-        if($_FILES["xmlfile"]){
-            SiteHelper::parseXml($_FILES["xmlfile"]);
-        }
+//        if($_FILES["xmlfile"]){
+//            SiteHelper::parseXml($_FILES["xmlfile"]);
+//        }
 
-		$this->render('index');
+        $url = "index";
+        $node = Structure::model()->findByUrl($url);
+        if($node)
+            $data["model"] = $node->getComponent();
+        else
+            throw new CHttpException(404);
+
+        $this->title = $data["model"]->title;
+
+		$this->render('index', $data);
 	}
 
 	/**
