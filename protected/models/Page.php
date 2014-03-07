@@ -6,13 +6,16 @@
 * The followings are the available columns in table '{{pages}}':
     * @property integer $id
     * @property string $title
-    * @property string $wswg_content
+    * @property string $description
+    * @property string $wswg_body
+    * @property string $img_preview
+    * @property integer $node_id
     * @property integer $status
     * @property integer $sort
     * @property string $create_time
     * @property string $update_time
 */
-class Page extends EActiveRecord
+class Page extends StructureMaterial
 {
     public function tableName()
     {
@@ -23,11 +26,12 @@ class Page extends EActiveRecord
     public function rules()
     {
         return array(
-            array('status, sort', 'numerical', 'integerOnly'=>true),
-            array('title', 'length', 'max'=>255),
-            array('wswg_content, create_time, update_time', 'safe'),
+            array('title', 'required'),
+            array('node_id, status, sort', 'numerical', 'integerOnly'=>true),
+            array('title, img_preview', 'length', 'max'=>255),
+            array('description, wswg_body, create_time, update_time', 'safe'),
             // The following rule is used by search().
-            array('id, title, wswg_content, status, sort, create_time, update_time', 'safe', 'on'=>'search'),
+            array('id, title, description, wswg_body, img_preview, node_id, status, sort, create_time, update_time', 'safe', 'on'=>'search'),
         );
     }
 
@@ -43,8 +47,11 @@ class Page extends EActiveRecord
     {
         return array(
             'id' => 'ID',
-            'title' => 'Заголовок',
-            'wswg_content' => 'Контент',
+            'title' => 'Заголовок страницы',
+            'description' => 'Краткое описание',
+            'wswg_body' => 'Тело страницы',
+            'img_preview' => 'Превью',
+            'node_id' => 'Ссылка на раздел',
             'status' => 'Статус',
             'sort' => 'Вес для сортировки',
             'create_time' => 'Дата создания',
@@ -56,19 +63,36 @@ class Page extends EActiveRecord
     public function behaviors()
     {
         return CMap::mergeArray(parent::behaviors(), array(
-        			'CTimestampBehavior' => array(
+			'imgBehaviorPreview' => array(
+				'class' => 'application.behaviors.UploadableImageBehavior',
+				'attributeName' => 'img_preview',
+				'versions' => array(
+					'icon' => array(
+						'centeredpreview' => array(90, 90),
+					),
+					'small' => array(
+						'resize' => array(200, 180),
+					)
+				),
+			),
+			'CTimestampBehavior' => array(
 				'class' => 'zii.behaviors.CTimestampBehavior',
                 'createAttribute' => 'create_time',
                 'updateAttribute' => 'update_time',
+                'setUpdateOnCreate' => true,
 			),
         ));
     }
+
     public function search()
     {
         $criteria=new CDbCriteria;
 		$criteria->compare('id',$this->id);
 		$criteria->compare('title',$this->title,true);
-		$criteria->compare('wswg_content',$this->wswg_content,true);
+		$criteria->compare('description',$this->description,true);
+		$criteria->compare('wswg_body',$this->wswg_body,true);
+		$criteria->compare('img_preview',$this->img_preview,true);
+		$criteria->compare('node_id',$this->node_id);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('sort',$this->sort);
 		$criteria->compare('create_time',$this->create_time,true);
@@ -83,11 +107,4 @@ class Page extends EActiveRecord
     {
         return parent::model($className);
     }
-
-    public function translition()
-    {
-        return 'Страницы';
-    }
-
-
 }

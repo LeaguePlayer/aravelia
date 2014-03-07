@@ -14,6 +14,14 @@ return array_replace_recursive(
             'appext'=>'application.extensions',
         ),
         'preload'=>array('log'),
+        'import'=>array(
+            'application.models.*',
+            'application.components.*',
+            //'application.behaviors.*',
+        ),
+        'aliases'=>array(
+            'appext'=>'application.extensions',
+        ),
         'modules'=>array(
             'admin'=>array(),
             'email'=>array(),
@@ -42,6 +50,12 @@ return array_replace_recursive(
 //                    ),
 //                ),
 //            ),
+            'clientScript'=>array(
+                'class'=>'EClientScript',
+                'scriptMap'=>array(
+                    //'jquery.min.js'=>'//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js',
+                ),
+            ),
             'clientScript'=>array(
                 'class'=>'EClientScript',
                 'scriptMap'=>array(

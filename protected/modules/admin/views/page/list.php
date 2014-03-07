@@ -19,6 +19,12 @@ $this->menu=array(
 	'columns'=>array(
 		'title',
 		array(
+			'header'=>'Фото',
+			'type'=>'raw',
+			'value'=>'TbHtml::imageCircle($data->imgBehaviorPreview->getImageUrl("icon"))'
+		),
+		'node_id',
+		array(
 			'name'=>'status',
 			'type'=>'raw',
 			'value'=>'Page::getStatusAliases($data->status)',

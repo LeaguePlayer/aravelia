@@ -1,15 +1,14 @@
 <?php
 $this->breadcrumbs=array(
-	"{$model->translition()}"=>array('list'),
-	'Редактирование',
+    "Структура сайта"=>array('/admin/structure/list'),
+    'Редактирование',
 );
 
 $this->menu=array(
-	array('label'=>'Список', 'url'=>array('list')),
-	array('label'=>'Добавить','url'=>array('create')),
+    array('label'=>'Структура сайта','url'=>array('/admin/structure/list')),
+    array('label'=>'Добавить новую','url'=>array('create', 'node_id'=>$model->node->id)),
 );
 ?>
 
-<h1><?php echo $model->translition(); ?> - Редактирование</h1>
-
+<h2><?php echo $model->node->name; ?></h2>
 <?php echo $this->renderPartial('_form',array('model'=>$model)); ?>

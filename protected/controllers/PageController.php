@@ -4,7 +4,6 @@ class PageController extends FrontController
 {
 	public $layout='//layouts/main';
 
-	
 	public function filters()
 	{
 		return array(
