@@ -183,6 +183,9 @@ class CatalogController extends FrontController
         // передаем GET параметры во вьюху
         $data["get"] = $get;
 
+        // формируем текст
+
+
         $cs = Yii::app()->clientScript;
         $cs->registerScriptFile($this->getAssetsUrl().'/js/min/filter.min.js', CClientScript::POS_END);
 

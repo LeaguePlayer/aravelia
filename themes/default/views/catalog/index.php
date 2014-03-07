@@ -3,7 +3,7 @@
 $this->title = "Каталог товаров";
 ?>
 <section class="content width">
-    <h1>Одежда для малышей, <?=$_GET["char"]?> см.</h1>
+    <h1><?=$cat_text?></h1>
 
     <div class="filter">
         <? if($categories):
