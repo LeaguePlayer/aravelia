@@ -43,8 +43,8 @@
 ?>
 <header>
     <div class="header width">
-        <a href="/page/1" class="logo"><img src="/media/images/logo.png" alt="Aravelia. Клубный салон детской одежды."></a>
-        <a href="/page/3" class="club-name">
+        <a href="/" class="logo"><img src="/media/images/logo.png" alt="Aravelia. Клубный салон детской одежды."></a>
+        <a href="/page/landing" class="club-name">
             <div class="club-name-body">
                 <h1>Детский клуб</h1>
                 <h5>салона детской одежды</h5>
@@ -212,15 +212,15 @@
 
 <?php echo $content; ?>
 
+<? if($this->mainMenu): ?>
 <nav class="bottom-menu width">
     <ul>
-        <li><a href="/page/2">О компании</a></li>
-        <li><a href="/page/3">Детский клуб</a></li>
-        <li><a href="/page/4">Мобильный продавец</a></li>
-        <li><a href="/page/5">Подарочные сертификаты</a></li>
-        <li><a href="/page/6">Контакты</a></li>
+        <? foreach($this->mainMenu as $m): ?>
+        <li><a href="<?=$m["url"]?>"><?=$m["label"]?></a></li>
+        <? endforeach; ?>
     </ul>
 </nav>
+<? endif; ?>
 
 <nav class="bottom-links width">
     <div class="girls">

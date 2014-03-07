@@ -1,22 +1,29 @@
 <?php
 /* @var $this ProductController */
-$this->title = $product["name"];
+$this->title = $model->name;
 ?>
 
 <section class="content width">
-    <h1><?=$product["name"]?></h1>
+    <h1><?=$model->name?></h1>
     <div class="page left shadow product">
         <div class="product_top">
             <div class="product_img">
-                <a class="fancybox" rel="photo" href="/media/images/nike.jpg"><img src="/media/images/nike.jpg" alt=""></a>
-                <a class="fancybox" rel="photo" href="/media/images/nike.jpg"><img width="75" src="/media/images/nike.jpg" alt=""></a>
-                <a class="fancybox" rel="photo" href="/media/images/nike.jpg"><img width="75" src="/media/images/nike.jpg" alt=""></a>
-                <a class="fancybox" rel="photo" href="/media/images/nike.jpg"><img width="75" src="/media/images/nike.jpg" alt=""></a>
-                <a class="fancybox" rel="photo" href="/media/images/nike.jpg"><img width="75" src="/media/images/nike.jpg" alt=""></a>
+                <? if($photos):
+                    foreach($photos as $k => $p):
+                    ?>
+                        <? if($k===0): ?>
+                            <a class="fancybox" rel="photo" href="<?=$p->getUrl("big")?>"><img src="<?=$p->getUrl("medium")?>" alt="<?=$p->name?>"></a>
+                        <? else: ?>
+                            <a class="fancybox" rel="photo" href="<?=$p->getUrl("big")?>"><img width="75" src="<?=$p->getUrl("small")?>" alt="<?=$p->name?>"></a>
+                    <?
+                        endif;
+                    endforeach;
+                endif;
+                ?>
             </div>
             <div class="product_feature">
                 <div class="product_text">
-                    <p><?=$product["wswg_desc"]?></p>
+                    <p><?=$model->wswg_desc?></p>
                 </div>
                 <div class="product_price">
                     <span><?=$sizes[0]["price"]?></span> руб.

@@ -53,7 +53,7 @@ $cs->registerScriptFile($this->getAssetsUrl().'/js/min/landing.min.js', CClientS
 <nav class="top-menu width">
     <div class="top-menu-body">
         <img src="/media/images/logo2.png" alt="Аравелия, клубный салон детской одежды">
-        <a href="/page/1" class="goto_site">Вернуться на сайт</a>
+        <a href="/" class="goto_site">Вернуться на сайт</a>
         <p class="main-phone">8  (3452) 52-07-92</p>
         <a href="#" class="feedback">Написать нам</a>
     </div>

@@ -1,2 +1,1 @@
-<? $this->title = $model->title; ?>
-<?php echo $model->wswg_content; ?>
+<?php echo $model->wswg_body; ?>
