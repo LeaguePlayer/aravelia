@@ -144,7 +144,7 @@ class SiteHelper {
             $name = str_replace('"', "", trim($attr["Наименование"]));
             $desc = str_replace('"', "", trim($attr["Описание"]));
             $datetime = date("Y-m-d H:i:s");
-            $brand_row = Yii::app()->db->createCommand()->select()->from("tbl_brands")->where("code=:code", array(":code"=>$code))->queryRow();
+            $brand_row = Yii::app()->db->createCommand()->select("*")->from("tbl_brands")->where("code=:code", array(":code"=>$code))->queryRow();
             if($brand_row){
                 if($brand_row["name"] != $name) {
                     $query .= "UPDATE tbl_brands SET name='{$name}'";
@@ -157,26 +157,6 @@ class SiteHelper {
             }
             else {
                 $query .= "INSERT INTO tbl_brands (code,name,wswg_desc, create_time, update_time) VALUES('{$code}','{$name}','{$desc}', '{$datetime}', '{$datetime}');";
-            }
-        }
-        if(!empty($query))
-            Yii::app()->db->createCommand($query)->execute();
-
-        // обрабатываем категории
-        $query = "";
-        foreach($xml->{"Категории"}->{"Категория"} as $cat){
-            $attr = $cat->attributes();
-            $code = str_replace('"', "", trim($attr["Код"]));
-            $name = str_replace('"', "", trim($attr["Наименование"]));
-            $datetime = date("Y-m-d H:i:s");
-            $cat_row = Yii::app()->db->createCommand()->select()->from("tbl_categories")->where("code=:code", array(":code"=>$code))->queryRow();
-            if($cat_row){
-                if($cat_row["name"] != $name) {
-                    $query .= "UPDATE tbl_categories SET name='{$name}', update_time='{$datetime}' WHERE code='{$code}';";
-                }
-            }
-            else {
-                $query .= "INSERT INTO tbl_categories (code,name,create_time,update_time) VALUES('{$code}','{$name}', '{$datetime}', '{$datetime}');";
             }
         }
         if(!empty($query))
@@ -196,7 +176,7 @@ class SiteHelper {
             $category_code = str_replace('"', "", trim($attr["КодКатегории"]));
             $brand_code = str_replace('"', "", trim($attr["КодПроизводителя"]));
             $datetime = date("Y-m-d H:i:s");
-            $product_row = Yii::app()->db->createCommand()->select()->from("tbl_products")->where("code=:code", array(":code"=>$code))->queryRow();
+            $product_row = Yii::app()->db->createCommand()->select("*")->from("tbl_products")->where("code=:code", array(":code"=>$code))->queryRow();
             if($product_row){
                 $query .= "UPDATE tbl_products SET code='{$code}', article='{$article}', `name`='{$name}', `group`='{$group}', country='{$country}', category_code='{$category_code}', brand_code='{$brand_code}'";
                 if(!empty($desc)){
@@ -220,6 +200,35 @@ class SiteHelper {
         if(!empty($query))
             Yii::app()->db->createCommand($query)->execute();
 
+        // обрабатываем категории
+        $query = "";
+        $i = 0;
+        foreach($xml->{"Категории"}->{"Категория"} as $cat){
+            $i++;
+            $attr = $cat->attributes();
+            $code = str_replace('"', "", trim($attr["Код"]));
+            $name = str_replace('"', "", trim($attr["Наименование"]));
+            $datetime = date("Y-m-d H:i:s");
+            $cat_row = Yii::app()->db->createCommand("SELECT * FROM tbl_categories WHERE name='{$name}'")->queryRow();
+            if($cat_row){
+                $query .= "UPDATE tbl_products SET category_code='{$cat_row["code"]}', update_time='{$datetime}' WHERE category_code='{$code}';";
+            }
+            else {
+                $cat_row2 = Yii::app()->db->createCommand("SELECT * FROM tbl_categories WHERE code='{$code}'")->queryRow();
+                if(!$cat_row2)
+                    $query .= "INSERT INTO tbl_categories (code,name,create_time,update_time) VALUES('{$code}','{$name}', '{$datetime}', '{$datetime}');";
+            }
+            if($i > 10){
+                if(!empty($query)) {
+                    Yii::app()->db->createCommand($query)->execute();
+                    $query = "";
+                    $i=0;
+                }
+            }
+        }
+        if(!empty($query))
+            Yii::app()->db->createCommand($query)->execute();
+
         // обрабатываем характеристики
         $query = "";
         $i = 0;
@@ -233,7 +242,7 @@ class SiteHelper {
             $values = explode("-", $value_from);
             $value_from = $values[0];
             $value_to = (count($values) > 2) ? $values[count($values)-1] : $values[1];
-            $char_row = Yii::app()->db->createCommand()->select()->from("tbl_characteristics")->where("code=:code", array(":code"=>$code))->queryRow();
+            $char_row = Yii::app()->db->createCommand()->select("*")->from("tbl_characteristics")->where("code=:code", array(":code"=>$code))->queryRow();
             if($char_row){
                 if($char_row["value"] != $value || $char_row["value_to"] != $value_to)
                     $query .= "UPDATE tbl_characteristics SET code='{$code}',`value`='{$value}',value_from='{$value_from}',value_to='{$value_to}' WHERE code='{$code}';";
@@ -262,7 +271,7 @@ class SiteHelper {
             $char_code = preg_replace('/[^0-9]/', '', $char_code);
             $price = preg_replace('/\s/', '', trim($attr["Цена"]));
             $count = preg_replace('/\s/', '', trim($attr["Количество"]));
-            $balans_row = Yii::app()->db->createCommand()->select()->from("tbl_balances")->where(array("and", "product_code=:product_code", "characteristic_code=:char_code"), array(":product_code"=>$product_code,":char_code"=>$char_code))->queryRow();
+            $balans_row = Yii::app()->db->createCommand()->select("*")->from("tbl_balances")->where(array("and", "product_code=:product_code", "characteristic_code=:char_code"), array(":product_code"=>$product_code,":char_code"=>$char_code))->queryRow();
             if($balans_row){
                 if($balans_row["price"] != $price || $balans_row["count"] != $count) {
                     $query .= "UPDATE tbl_balances SET ";

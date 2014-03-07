@@ -36,7 +36,11 @@
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,800,700,300&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
 </head>
 <body>
-
+<?
+//echo "<pre>";
+//print_r($this->cat);
+//echo "</pre>";
+?>
 <header>
     <div class="header width">
         <a href="/page/1" class="logo"><img src="/media/images/logo.png" alt="Aravelia. Клубный салон детской одежды."></a>
@@ -62,42 +66,43 @@
                 <a href="/catalog?group=Девочка">Девочка</a><span></span>
                 <div class="subitems">
                     <ul>
-                        <li class="subitem">
-                            <a href="/catalog?group=Девочка&char=98-104">98-104</a>
-                            <ul>
-                                <li><a href="/catalog?group=Девочка&char=98-104&cat=147">Майки</a></li>
-                                <li><a href="/catalog?group=Девочка&char=98-104&cat=198">Футболки</a></li>
-                                <li><a href="/catalog?group=Девочка&char=98-104&cat=356">Юбки</a></li>
-                                <li><a href="/catalog?group=Девочка&char=98-104&cat=357">Брюки</a></li>
-                            </ul>
-                        </li>
-                        <li class="subitem">
-                            <a href="/catalog?group=Девочка&char=104-110">104-110</a>
-                            <ul>
-                                <li><a href="/catalog?group=Девочка&char=104-110&cat=210">Блузки</a></li>
-                                <li><a href="/catalog?group=Девочка&char=104-110&cat=198">Футболки</a></li>
-                                <li><a href="/catalog?group=Девочка&char=104-110&cat=206">Юбки</a></li>
-                                <li><a href="/catalog?group=Девочка&char=104-110&cat=214">Брюки</a></li>
-                            </ul>
-                        </li>
-                        <li class="subitem">
-                            <a href="/catalog?group=Девочка&char=110-116">110-116</a>
-                            <ul>
-                                <li><a href="/catalog?group=Девочка&char=110-116&cat=210">Блузки</a></li>
-                                <li><a href="/catalog?group=Девочка&char=110-116&cat=198">Футболки</a></li>
-                                <li><a href="/catalog?group=Девочка&char=110-116&cat=206">Юбки</a></li>
-                                <li><a href="/catalog?group=Девочка&char=110-116&cat=214">Брюки</a></li>
-                            </ul>
-                        </li>
-                        <li class="subitem">
-                            <a href="/catalog?group=Девочка&char=116-122">116-122</a>
-                            <ul>
-                                <li><a href="/catalog?group=Девочка&char=116-122&cat=210">Блузки</a></li>
-                                <li><a href="/catalog?group=Девочка&char=116-122&cat=198">Футболки</a></li>
-                                <li><a href="/catalog?group=Девочка&char=116-122&cat=274">Юбки</a></li>
-                                <li><a href="/catalog?group=Девочка&char=116-122&cat=214">Брюки</a></li>
-                            </ul>
-                        </li>
+                        <? foreach($this->cat["girls"] as $k=>$v): ?>
+                            <li class="subitem">
+                                <a href="/catalog?group=Девочка&char=<?=$k?>"><?=$k?></a>
+                                <ul>
+                                    <? foreach($v as $c): ?>
+                                        <li><a href="/catalog?group=Девочка&char=98-104&cat=<?=$c["id"]?>"><?=$c["name"]?></a></li>
+                                    <? endforeach; ?>
+                                </ul>
+                            </li>
+                        <? endforeach; ?>
+<!--                        <li class="subitem">-->
+<!--                            <a href="/catalog?group=Девочка&char=104-110">104-110</a>-->
+<!--                            <ul>-->
+<!--                                <li><a href="/catalog?group=Девочка&char=104-110&cat=210">Блузки</a></li>-->
+<!--                                <li><a href="/catalog?group=Девочка&char=104-110&cat=198">Футболки</a></li>-->
+<!--                                <li><a href="/catalog?group=Девочка&char=104-110&cat=206">Юбки</a></li>-->
+<!--                                <li><a href="/catalog?group=Девочка&char=104-110&cat=214">Брюки</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+<!--                        <li class="subitem">-->
+<!--                            <a href="/catalog?group=Девочка&char=110-116">110-116</a>-->
+<!--                            <ul>-->
+<!--                                <li><a href="/catalog?group=Девочка&char=110-116&cat=210">Блузки</a></li>-->
+<!--                                <li><a href="/catalog?group=Девочка&char=110-116&cat=198">Футболки</a></li>-->
+<!--                                <li><a href="/catalog?group=Девочка&char=110-116&cat=206">Юбки</a></li>-->
+<!--                                <li><a href="/catalog?group=Девочка&char=110-116&cat=214">Брюки</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
+<!--                        <li class="subitem">-->
+<!--                            <a href="/catalog?group=Девочка&char=116-122">116-122</a>-->
+<!--                            <ul>-->
+<!--                                <li><a href="/catalog?group=Девочка&char=116-122&cat=210">Блузки</a></li>-->
+<!--                                <li><a href="/catalog?group=Девочка&char=116-122&cat=198">Футболки</a></li>-->
+<!--                                <li><a href="/catalog?group=Девочка&char=116-122&cat=274">Юбки</a></li>-->
+<!--                                <li><a href="/catalog?group=Девочка&char=116-122&cat=214">Брюки</a></li>-->
+<!--                            </ul>-->
+<!--                        </li>-->
                     </ul>
                 </div>
             </li>

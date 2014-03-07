@@ -38,6 +38,7 @@ $(function(){
                     success: function(js){
                         $("body").append('<script type="text/javascript" src="' +src+ '">'+ js +'</script>');
                         $(document).triggerHandler("ready");
+                        $(document).triggerHandler("changeProducts");
                         $("#clear_favorites").triggerHandler("click");
                     }
                 });

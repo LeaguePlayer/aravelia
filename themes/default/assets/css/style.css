@@ -46,7 +46,7 @@ body h1, body h2, body h3, body h4, body h5, body a, body p {
 }
 
 .more_button:active {
-  margin-top: 3px;
+  margin-top: 3px !important;
   border-bottom: none;
 }
 
@@ -223,7 +223,7 @@ header .header .cart-wrap .cart:hover h4 {
   left: 0px;
   background-color: #00b9ee;
   z-index: 10;
-  width: 345px;
+  width: 700px;
   z-index: -1;
 }
 .top-menu .top-menu-body ul .item .subitems .subitem {
@@ -233,6 +233,7 @@ header .header .cart-wrap .cart:hover h4 {
   padding: 0px;
 }
 .top-menu .top-menu-body ul .item .subitems .subitem a {
+  display: block;
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 5px;
@@ -1006,6 +1007,7 @@ footer .footer-wrap .adress {
 }
 
 .filter {
+  position: relative;
   background-color: white;
   margin: 20px 0 20px 0;
 }
@@ -1056,10 +1058,11 @@ footer .footer-wrap .adress {
   color: black;
 }
 .filter .expand {
-  position: relative;
-  width: 160px;
-  height: 49px;
-  float: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 160px;
+    height: 49px;
 }
 .filter .expand .show-filter {
   display: block;
@@ -1383,6 +1386,33 @@ footer .footer-wrap .adress {
   width: 20px;
 }
 
+/* Пагинация */
+.pagination {
+    width: 920px;
+    margin-top: 20px;
+    padding: 10px;
+    box-shadow: 0px 5px 40px -15px;
+}
+.pagination ul.yiiPager {
+    font-size: 13px;
+}
+.pagination ul.yiiPager a:link,
+.pagination ul.yiiPager a:visited {
+    border: solid 1px #b4b4b4;
+    font-weight: normal;
+    color: #545454;
+    padding: 1px 6px;
+    text-decoration: none;
+}
+.pagination ul.yiiPager a:hover {
+    border: solid 1px #545454;
+}
+.pagination ul.yiiPager .selected a {
+    background: #b4b4b4;
+    color: #FFF;
+    font-weight: bold;
+}
+
 /* Всплывающие окна */
 .simplemodal-overlay {
   background-color: rgba(188, 157, 100, 0.8);
@@ -1483,4 +1513,8 @@ footer .footer-wrap .adress {
   height: 27px;
   width: 150px;
   text-align: center;
+}
+#modal-addProduct .modal-footer a:active,
+#modal-addFavorite .modal-footer a:active {
+    margin-top: 13px !important;
 }

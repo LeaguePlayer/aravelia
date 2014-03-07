@@ -6,30 +6,50 @@ $this->title = "Каталог товаров";
     <h1>Одежда для малышей, <?=$_GET["char"]?> см.</h1>
 
     <div class="filter">
+        <? if($categories):
+            $get_cat = $get;
+            if(isset($_GET["cat"])){
+                $key = array_search("cat=".$_GET["cat"],$get_cat);
+                if($key !== false)
+                    unset($get_cat[$key]);
+            }
+            if(isset($_GET["page"])){
+                $key = array_search("page=".$_GET["page"],$get_cat);
+                if($key !== false)
+                    $get_cat[$key] = "page=1";;
+            }
+            ?>
         <ul>
-            <li class="active"><a href="#">Верх</a></li>
-            <li><a href="#">Низ</a></li>
-            <li><a href="#">Куртки</a></li>
-            <li><a href="#">Платья</a></li>
-            <li><a href="#">Комплекты</a></li>
-            <li><a href="#">Нижнее белье</a></li>
-            <li><a href="#">Обувь</a></li>
+            <? foreach($categories as $c): ?>
+            <li <?=($_GET['cat']==$c["id"]) ? 'class="active"' : ''; ?>><a href="/catalog?<?=implode("&",$get_cat)?>&cat=<?=$c["id"]?>"><?=$c["name"]?></a></li>
+            <? endforeach; ?>
         </ul>
+        <? endif; ?>
         <div class="expand">
             <a href="#" class="show-filter">Развернуть фильтр</a>
             <a href="#" class="hide-filter">Свернуть фильтр</a>
             <div class="filter-form">
                 <form>
-                    <select>
-                        <option>Бренд Gakkard</option>
-                        <option>Бренд Gakkard</option>
-                        <option>Бренд Gakkard</option>
-                    </select>
-                    <select>
-                        <option>Девочки</option>
-                        <option>Мальчики</option>
-                        <option>Младенцы</option>
-                    </select>
+
+                    <? if($brands): ?>
+                        <select name="brand">
+                            <option value="0">Бренд</option>
+                            <? foreach($brands as $b): ?>
+                                <option value="<?=$b['code']?>" <? echo ($b["code"]==$_GET["brand"]) ? 'selected="selected"' : '' ?>><?=$b['name']?></option>
+                            <? endforeach; ?>
+                        </select>
+                    <? endif; ?>
+
+                    <? if($groups): ?>
+                        <select name="group">
+                            <? foreach($groups as $g): ?>
+                                <? if(!empty($g["group"])): ?>
+                                    <option value="<?=$g["group"]?>" <? echo ($g["group"]==$_GET["group"]) ? 'selected="selected"' : '' ?>><?=$g["group"]?></option>
+                                <? endif; ?>
+                            <? endforeach; ?>
+                        </select>
+                    <? endif; ?>
+
                     <select>
                         <option>Ростовка 116-170</option>
                         <option>Ростовка 116-170</option>
@@ -70,6 +90,15 @@ $this->title = "Каталог товаров";
         endif;
         ?>
 </section>
+
+<? if($pages->pageCount>1): ?>
+<div class="width box-white pagination">
+    <?php $this->widget('CLinkPager', array(
+        'pages' => $pages,
+        'header' => '',
+    )) ?>
+</div>
+<? endif; ?>
 
 <?
 $this->widget('application.components.see_products.seeProducts');

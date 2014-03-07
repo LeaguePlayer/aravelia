@@ -50,6 +50,13 @@ class CatalogController extends FrontController
             }
         }
 
+        if(isset($_GET["brand"])){
+            $criteria[] = "p.brand_code=".preg_replace("/[^0-9]/", "", $_GET["brand"]);
+            $get[] = "brand=".preg_replace("/[^0-9]/", "", $_GET["brand"]);
+            if(strlen($_GET["brand"]) != strlen(preg_replace("/[^0-9]/", "", $_GET["brand"])))
+                $redirect = true;
+        }
+
         if(isset($_GET["page"])){
             if(is_numeric($_GET["page"]) && $_GET["page"]>0){
                 $limit = ($_GET["page"]-1)*16;
@@ -67,6 +74,38 @@ class CatalogController extends FrontController
 
         if($redirect)
             $this->redirect("/catalog?".implode("&",$get));
+
+        // определяем общее количество записей для пагинации
+        $query = "SELECT
+                    count(p.id) count
+                FROM
+                    tbl_products as p
+                RIGHT JOIN
+                    (SELECT
+                        tbl_balances.product_code,
+                        tbl_balances.characteristic_code
+                    FROM
+                        tbl_balances
+                    WHERE
+                        tbl_balances.count>0
+                    GROUP BY
+                        tbl_balances.product_code) as b
+                ON
+                    p.code=b.product_code
+                LEFT JOIN
+                    tbl_characteristics as c
+                ON
+                    b.characteristic_code=c.code
+                LEFT JOIN
+                    tbl_categories as cat
+                ON
+                    cat.code=p.category_code
+                WHERE
+                    ".implode(" AND ", $criteria);
+        $count = Yii::app()->db->createCommand($query)->queryRow();
+        $data["pages"] = new CPagination($count["count"]);
+        $data["pages"]->pageSize = 16;
+        $data["pages"]->pageVar = "page";
 
         $query = "SELECT
                     p.id,
@@ -100,7 +139,49 @@ class CatalogController extends FrontController
                     ".$limit.",16";
 
         $data["products"] = Yii::app()->db->createCommand($query)->queryAll();
-        $data["page"] = $_GET["page"];
+
+        $data["brands"] = Yii::app()->db->createCommand()
+            ->select("id, code, name")
+            ->from("tbl_brands")
+            ->order("name ASC")
+            ->queryAll();
+
+        $data["groups"] = Yii::app()->db->createCommand()
+            ->select("distinct(`group`)")
+            ->from("tbl_products")
+            ->queryAll();
+
+        $key = array_search("cat.id=".$_GET["cat"], $criteria);
+        if ($key !== false)
+            unset($criteria[$key]);
+        $data["categories"] = Yii::app()->db->createCommand("SELECT
+                                                                distinct(id),
+                                                                name
+                                                            FROM
+                                                                (SELECT
+                                                                    cat.id,
+                                                                    cat.name
+                                                                FROM
+                                                                    tbl_categories as cat
+                                                                RIGHT JOIN
+                                                                    tbl_products as p
+                                                                ON
+                                                                    p.category_code=cat.code
+                                                                RIGHT JOIN
+                                                                    tbl_balances as b
+                                                                ON
+                                                                    b.product_code=p.code
+                                                                RIGHT JOIN
+                                                                    tbl_characteristics as c
+                                                                ON
+                                                                    c.code=b.characteristic_code
+                                                                WHERE
+                                                                    ".implode(" AND ", $criteria)."
+                                                                ORDER BY
+                                                                    cat.name ASC) as tbl")->queryAll();
+
+        // передаем GET параметры во вьюху
+        $data["get"] = $get;
 
         $cs = Yii::app()->clientScript;
         $cs->registerScriptFile($this->getAssetsUrl().'/js/min/filter.min.js', CClientScript::POS_END);

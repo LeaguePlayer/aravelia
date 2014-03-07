@@ -23,6 +23,8 @@ $(function(){
  * @param int event.data.offsetTop - растояние от края экрана до блока div.filter
  */
 var filter_fixed = function(event) {
+    var height = $(".filter").height();
+    height = height+40;
 	if($(document).scrollTop() > event.data.offsetTop){
 		$(".filter").css({
 			"position" : "fixed",
@@ -41,7 +43,7 @@ var filter_fixed = function(event) {
 				"box-shadow" : "none"
 			});
 		}
-		$(".clothes").css("margin-top","80px");
+		$(".clothes").css("margin-top",height+"px");
 
 	}
 	else {
