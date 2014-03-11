@@ -110,7 +110,7 @@ class CatalogController extends FrontController
         $query = "SELECT
                     p.id,
                     p.name,
-                    gllr_photos
+                    gp.id photo_id
                 FROM
                     tbl_products as p
                 RIGHT JOIN
@@ -133,6 +133,15 @@ class CatalogController extends FrontController
                     tbl_categories as cat
                 ON
                     cat.code=p.category_code
+                LEFT JOIN
+                    (SELECT
+                        *
+                    FROM
+                        gallery_photo
+                    WHERE
+                        gallery_photo.main=1) as gp
+                ON
+                    gp.gallery_id=p.gllr_photos
                 WHERE
                     ".implode(" AND ", $criteria)."
                 LIMIT

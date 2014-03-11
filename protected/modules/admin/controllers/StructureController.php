@@ -142,4 +142,10 @@ class StructureController extends AdminController
         }
         echo CJSON::encode(array('success'=>$success, 'action'=>'toParent'));
     }
+
+    public function actionDelete(){
+        $model = Structure::model()->findByPk($id);
+        $model->deleteNode();
+        $this->redirect(array('list'));
+    }
 }

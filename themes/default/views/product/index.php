@@ -18,6 +18,10 @@ $this->title = $model->name;
                     <?
                         endif;
                     endforeach;
+                else:
+                    ?>
+                    <img src="/media/images/no_photo.png" alt="Нет фото"/>
+                    <?
                 endif;
                 ?>
             </div>
@@ -30,7 +34,7 @@ $this->title = $model->name;
                 </div>
                 <div class="product_addbasket">
                     <form id="form-product_add" action="" method="post">
-                        <input type="hidden" name="product_id" value="<?=$product["id"]?>" />
+                        <input type="hidden" name="product_id" value="<?=$model["id"]?>" />
                         <select name="size" id="size">
                             <option value="0">Ростовка</option>
                             <?

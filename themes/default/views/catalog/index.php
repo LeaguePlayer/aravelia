@@ -69,7 +69,11 @@ $this->title = "Каталог товаров";
             foreach($products as $p):
             ?>
                 <a href="/product?id=<?=$p["id"]?>" class="item">
-                    <img src="/media/images/item1.jpg">
+                    <? if($p["photo_id"] != null): ?>
+                        <img width="220" src="/media/images/<?=$p["photo_id"]?>medium.jpg">
+                    <? else: ?>
+                        <img width="220" src="/media/images/no_photo2.png">
+                    <? endif; ?>
                     <div class="item-title">
                         <div>
                             <h5><?=$p["name"]?></h5>
