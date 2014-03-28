@@ -1469,7 +1469,9 @@ footer .footer-wrap .adress {
 #modal-feedback,
 #modal-feedback-true,
 #modal-order,
+#modal-order-mobile,
 #modal-order-big,
+#modal-order-big-mobile,
 #modal-order-true,
 #modal-addProduct,
 #modal-addFavorite {
@@ -1479,6 +1481,8 @@ footer .footer-wrap .adress {
 
 #modal-order p,
 #modal-order a,
+#modal-order-mobile p,
+#modal-order-mobile a,
 #modal-order-big p,
 #modal-order-big a {
   font-size: 12px;
@@ -1492,7 +1496,8 @@ footer .footer-wrap .adress {
   vertical-align: 0px;
 }
 #modal-order select,
-#modal-order-big select {
+#modal-order-big select,
+#modal-order-big-mobile select {
   display: block;
   width: 260px;
   height: 30px;
@@ -1503,7 +1508,8 @@ footer .footer-wrap .adress {
   cursor: pointer;
 }
 #modal-order select option,
-#modal-order-big select option {
+#modal-order-big select option,
+#modal-order-big-mobile select option {
   color: black;
 }
 

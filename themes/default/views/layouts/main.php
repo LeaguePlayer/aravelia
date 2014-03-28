@@ -288,7 +288,7 @@
         <div class="modal-title">Вы можете<br>оставить сообщение<br>или задать вопрос</div>
     </div>
     <div class="modal-content">
-        <form method="post">
+        <form method="post" action="/site/feedback">
             <input type="text" name="name" placeholder="Ваше имя">
             <input type="text" name="email" placeholder="E-mail">
             <textarea name="message" placeholder="Сообщение" rows="3"></textarea>
@@ -320,7 +320,7 @@
         <div class="modal-title">Оформление заявки</div>
     </div>
     <div class="modal-content">
-        <form method="post">
+        <form method="post" action="/site/order">
             <input type="text" name="name" placeholder="Ваше имя">
             <input type="text" name="phone" placeholder="Телефон">
             <input type="submit" class="more_button" value="Отправить">
@@ -338,13 +338,68 @@
     </div>
 </div>
 
+<!-- Модальное окно оформления заказа -->
+<div id="modal-order-mobile">
+    <div class="modal-header">
+        <div class="modal-title">Оформление заявки</div>
+    </div>
+    <div class="modal-content">
+        <form method="post" action="/site/mobile">
+            <input type="text" name="name" placeholder="Ваше имя">
+            <input type="text" name="phone" placeholder="Телефон">
+            <input type="submit" class="more_button" value="Отправить">
+        </form>
+    </div>
+    <div class="modal-footer">
+        <p>
+            <img src="/media/images/lock.png" alt="lock">
+            Введенные личные данные в безопасности и не будут переданы третьим лицам
+        </p>
+        <p>
+            У вас есть лишние 2 минуты?<br>
+            Можете <a href="#" id="big-order-complete-button-mobile" class="link-blue">перейти к полному<br> оформлению заказа</a>
+        </p>
+    </div>
+</div>
+
 <!-- Модальное окно полного оформления заказа -->
 <div id="modal-order-big">
     <div class="modal-header">
         <div class="modal-title">Оформление заявки</div>
     </div>
     <div class="modal-content">
-        <form method="post">
+        <form method="post" action="/site/order">
+            <input type="text" name="name" placeholder="Ваше имя">
+            <input type="text" name="phone" placeholder="Телефон">
+            <input type="text" name="email" placeholder="E-mail">
+            <textarea name="address" placeholder="Ваш адрес" rows="3"></textarea>
+            <select name="delivery" id="delivery">
+                <option value="Курьерская доставка">Курьерская доставка (200 руб.)</option>
+                <option value="Самовывоз">Самовывоз (0 руб.)</option>
+            </select>
+            <select name="payment" id="payment">
+                <option value="Оплата банковской картой">Оплата банковской картой</option>
+                <option value="Оплата наличными">Оплата наличными</option>
+            </select>
+            <textarea name="messages" placeholder="Комментарий" rows="3"></textarea>
+            <input type="submit" class="more_button" value="Оформить заявку">
+        </form>
+    </div>
+    <div class="modal-footer">
+        <p>
+            <img src="/media/images/lock.png" alt="lock">
+            Введенные личные данные в безопасности и не будут переданы третьим лицам
+        </p>
+    </div>
+</div>
+
+<!-- Модальное окно полного оформления заказа мобильного продавца -->
+<div id="modal-order-big-mobile">
+    <div class="modal-header">
+        <div class="modal-title">Оформление заявки</div>
+    </div>
+    <div class="modal-content">
+        <form method="post" action="/site/mobile">
             <input type="text" name="name" placeholder="Ваше имя">
             <input type="text" name="phone" placeholder="Телефон">
             <input type="text" name="email" placeholder="E-mail">

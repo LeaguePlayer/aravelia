@@ -1,4 +1,4 @@
-$(function(){
+(function(){
 
 	// считаем итоговую цену
 	$(document).on("ready", function(){
@@ -21,56 +21,57 @@ $(function(){
 	
 	// всплывающее окно оформления заказа
 	$("input#order-complete-button").on("click", function(){
-		var $_modal_order = $("#modal-order");
-		$.modal($_modal_order, {
-			minHeight: 320,
-			minWidth: 300,
-			maxHeight: 320,
-			maxWidth: 300,
-			opacity: 80,
-			overlayClose: true,
-			focus: false,
-			autoResize: false,
-			onShow: function(dialog){
-				$("#modal-order input[name='phone']").mask("8(999)999-99-99");
-				// Валидация формы
-				options = {
-					submitHandler: function(form) {
-						formsubmit(form);
-						return false;
-					},
-					errorClass: "control-group error",
-					rules: {
-						name: {
-							required: true,
-							russian: true,
-							maxlength: 250
-						},
-						phone: {
-							required: true
-						}
-					},
-					errorPlacement: function(error, element) {
-						var er;
-						er = element.attr("name");
-						return popover(error.text(), element);
-					},
-					highlight: function(element, errorClass) {
-						return $(element).addClass(errorClass);
-					},
-					unhighlight: function(element, errorClass) {
-						return $(element).removeClass(errorClass);
-					}
-				};
-				$_modal_order.find("form").validate(options);
-			}
-		});
-		return false;
+        $("#big-order-complete-button").addClass('basket');
+        var $_modal_order = $("#modal-order");
+        $.modal($_modal_order, {
+            minHeight: 320,
+            minWidth: 300,
+            maxHeight: 320,
+            maxWidth: 300,
+            opacity: 80,
+            overlayClose: true,
+            focus: false,
+            autoResize: false,
+            onShow: function(dialog){
+                // Валидация формы
+                $("#modal-order input[name='phone']").mask("8(999)999-99-99");
+                $_modal_order.find("form").validate({
+                    submitHandler: function(form) {
+                        orderSubmit(form);
+                        return false;
+                    },
+                    errorClass: "control-group error",
+                    rules: {
+                        name: {
+                            required: true,
+                            russian: true,
+                            maxlength: 250
+                        },
+                        phone: {
+                            required: true,
+                            maxlength: 16,
+                            minlength: 14
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        var er;
+                        er = element.attr("name");
+                        return popover(error.text(), element);
+                    },
+                    highlight: function(element, errorClass) {
+                        return $(element).addClass(errorClass);
+                    },
+                    unhighlight: function(element, errorClass) {
+                        return $(element).removeClass(errorClass);
+                    }
+                });
+            }
+        });
+        return false;
 	});
 
 	// всплывающее окно полного оформления заказа
-	$("a#big-order-complete-button").on("click", function(){
-
+	$("#modal-order").on("click", "#big-order-complete-button.basket", function(){
 		// если имя пользователь уже вводил в окне оформления заказа
 		if($("#modal-order input[name='name']").val().length > 1){
 			$("#modal-order-big input[name='name']").val($("#modal-order input[name='name']").val());
@@ -80,11 +81,11 @@ $(function(){
 		}
 
 		$.modal.close();
-		var $_modal_order = $("#modal-order-big");
-		$.modal($_modal_order, {
-			minHeight: 530,
+		var $_modal_order_big = $("#modal-order-big");
+		$.modal($_modal_order_big, {
+			minHeight: 540,
 			minWidth: 300,
-			maxHeight: 530,
+			maxHeight: 540,
 			maxWidth: 300,
 			opacity: 80,
 			overlayClose: true,
@@ -93,56 +94,48 @@ $(function(){
 			onShow: function(dialog){
 				// Валидация формы
 				$("#modal-order-big input[name='phone']").mask("8(999)999-99-99");
-				options = {
-					submitHandler: function(form) {
-						formsubmit(form);
-						return false;
-					},
-					errorClass: "control-group error",
-					rules: {
-						name: {
-							required: true,
-							russian: true,
-							maxlength: 250
-						},
-						email: {
-							required: true,
-							email: true,
-							maxlength: 250
-						},
-						phone: {
-							required: true,
-							maxlength: 16,
-							minlength: 14
-						},
-						address: {
-							required: true,
-							minlength: 10,
-							maxlength: 1000
-						},
-						delivery: {
-							required: true
-						},
-						pay: {
-							required: true
-						},
-						messages: {
-							maxlength: 1000
-						}
-					},
-					errorPlacement: function(error, element) {
-						var er;
-						er = element.attr("name");
-						return popover(error.text(), element);
-					},
-					highlight: function(element, errorClass) {
-						return $(element).addClass(errorClass);
-					},
-					unhighlight: function(element, errorClass) {
-						return $(element).removeClass(errorClass);
-					}
-				};
-				$_modal_order.find("form").validate(options);
+                $_modal_order_big.find("form").validate({
+                    submitHandler: function(form) {
+                        orderSubmit(form);
+                        return false;
+                    },
+                    errorClass: "control-group error",
+                    rules: {
+                        name: {
+                            required: true,
+                            russian: true,
+                            maxlength: 250
+                        },
+                        email: {
+                            required: true,
+                            email: true,
+                            maxlength: 250
+                        },
+                        phone: {
+                            required: true
+                        },
+                        address: {
+                            required: true,
+                            minlength: 10,
+                            maxlength: 1000
+                        },
+                        messages: {
+                            minlength: 0,
+                            maxlength: 1000
+                        }
+                    },
+                    errorPlacement: function(error, element) {
+                        var er;
+                        er = element.attr("name");
+                        return popover(error.text(), element);
+                    },
+                    highlight: function(element, errorClass) {
+                        return $(element).addClass(errorClass);
+                    },
+                    unhighlight: function(element, errorClass) {
+                        return $(element).removeClass(errorClass);
+                    }
+                });
 			}
 		});
 		return false;
@@ -165,23 +158,42 @@ $(function(){
 		});
 	};
 
-	// отправляем форму
-	var formsubmit = function(form){
-		ajaxload();
-		setTimeout(function(){
-			$.modal.close();
-			$("#modal-order-true").modal({
-				minHeight: 280,
-				minWidth: 300,
-				maxHeight: 280,
-				maxWidth: 300,
-				opacity: 80,
-				overlayClose: true,
-				focus: false,
-				autoResize: false
-			});
-		},1000);
-	};
+
+    var orderSubmit = function(form){
+        ajaxload();
+        $.ajax({
+            type: "POST",
+            url: $(form).attr("action"),
+            data: $(form).serialize(),
+            dataType: "json",
+            success: function(data){
+                console.log(data);
+                $.modal.close();
+                $("#modal-order-true").modal({
+                    minHeight: 280,
+                    minWidth: 300,
+                    maxHeight: 280,
+                    maxWidth: 300,
+                    opacity: 80,
+                    overlayClose: true,
+                    focus: false,
+                    autoResize: false,
+                    onClose: function(dialog){
+                        ajaxload();
+                        $("div.basket").html("<p>В вашей корзине товаров нет.</p>");
+                        $(document).triggerHandler("ready");
+                        $(document).triggerHandler("changeProducts");
+                        setTimeout(function(){$.modal.close();},1000);
+                    }
+                });
+                return true;
+            },
+            error: function(data){
+                $.modal.close();
+                console.log(data);
+            }
+        });
+    };
 
 	// функция удаления товара
 	// генерирует событие changeProducts
@@ -216,11 +228,10 @@ $(function(){
 				id: $(element).data("id"),
 				count: $(element).val(),
 				price: $(element).data("price"),
-              balans_id: $(element).data("balans")
+                balans_id: $(element).data("balans")
 			};
 		});
 		$.cookie("products", JSON.stringify(products));
 		return price;
 	};
-
-});
+}());

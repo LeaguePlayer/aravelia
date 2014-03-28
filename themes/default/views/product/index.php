@@ -27,6 +27,7 @@ $this->title = $model->name;
             </div>
             <div class="product_feature">
                 <div class="product_text">
+                    <p>Артикул: <?=$model->article?></p>
                     <p><?=$model->wswg_desc?></p>
                 </div>
                 <div class="product_price">

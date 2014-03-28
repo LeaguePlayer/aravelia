@@ -6,7 +6,7 @@ if($products):
     <div class="clothes">
         <? foreach($products as $p): ?>
             <a href="/product?id=<?=$p["id"]?>" class="item">
-                <img src="/media/images/obraz.jpg">
+                <img width="220" src="<?=Product::getMainPhotoUrl($p["gllr_photos"], "normal")?>">
                 <div class="item-title">
                     <div>
                         <h5><?=$p["name"]?></h5>

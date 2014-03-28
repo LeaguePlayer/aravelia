@@ -72,7 +72,10 @@ class Page extends StructureMaterial
 					),
 					'small' => array(
 						'resize' => array(200, 180),
-					)
+					),
+                    'normal' => array(
+                        'resize' => array(320, 200),
+                    ),
 				),
 			),
 			'CTimestampBehavior' => array(

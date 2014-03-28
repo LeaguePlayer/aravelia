@@ -6,7 +6,7 @@ $(function(){
 		submitHandler: function(form) {
 			if($(".check_sert .switch-check:checked").length != 0) {
 				$("#check_sert_message").css("display", "none");
-				formsubmit(form);
+				sertSubmit(form);
 			}
 			else {
 				$("#check_sert_message").css("display", "block");
@@ -54,24 +54,36 @@ $(function(){
 	});
 
 	// отправляем форму
-	var formsubmit = function(form){
+	var sertSubmit = function(form){
 		ajaxload();
-		setTimeout(function(){
-			$.modal.close();
-			$("#modal-order-true").modal({
-				minHeight: 280,
-				minWidth: 300,
-				maxHeight: 280,
-				maxWidth: 300,
-				opacity: 80,
-				overlayClose: true,
-				focus: false,
-				autoResize: false,
-				onClose: function(){
-					window.location.reload();
-				}
-			});
-		},1000);
+        $.ajax({
+            type: "POST",
+            url: "/site/sertificats",
+            data: $(form).serialize()+"&"+$("#sertificats-list").serialize(),
+            dataType: "json",
+            success: function(data){
+                console.log(data);
+                $.modal.close();
+                $("#modal-order-true").modal({
+                    minHeight: 280,
+                    minWidth: 300,
+                    maxHeight: 280,
+                    maxWidth: 300,
+                    opacity: 80,
+                    overlayClose: true,
+                    focus: false,
+                    autoResize: false,
+                    onClose: function(){
+                        window.location.reload();
+                    }
+                });
+                return true;
+            },
+            error: function(data){
+                $.modal.close();
+                console.log(data);
+            }
+        });
 	};
 
 	// функция подсчета итоговой цены

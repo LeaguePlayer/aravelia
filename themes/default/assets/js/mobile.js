@@ -2,7 +2,7 @@ $(function(){
 
 	// всплывающее окно оформления заказа
 	$("a#order-button").on("click", function(){
-		var $_modal_order = $("#modal-order");
+		var $_modal_order = $("#modal-order-mobile");
 		$.modal($_modal_order, {
 			minHeight: 320,
 			minWidth: 300,
@@ -13,11 +13,11 @@ $(function(){
 			focus: false,
 			autoResize: false,
 			onShow: function(dialog){
-				$("#modal-order input[name='phone']").mask("8(999)999-99-99");
+				$("#modal-order-mobile input[name='phone']").mask("8(999)999-99-99");
 				// Валидация формы
 				options = {
 					submitHandler: function(form) {
-						formsubmit(form);
+						mobileSubmit(form);
 						return false;
 					},
 					errorClass: "control-group error",
@@ -50,7 +50,7 @@ $(function(){
 	});
 
 	// всплывающее окно полного оформления заказа
-	$("a#big-order-complete-button").on("click", function(){
+	$("#modal-order-mobile").on("click", "#big-order-complete-button-mobile", function(){
 
 		// если имя пользователь уже вводил в окне оформления заказа
 		if($("#modal-order input[name='name']").val().length > 1){
@@ -61,7 +61,7 @@ $(function(){
 		}
 
 		$.modal.close();
-		var $_modal_order = $("#modal-order-big");
+		var $_modal_order = $("#modal-order-big-mobile");
 		$.modal($_modal_order, {
 			minHeight: 455,
 			minWidth: 300,
@@ -73,10 +73,10 @@ $(function(){
 			autoResize: false,
 			onShow: function(dialog){
 				// Валидация формы
-				$("#modal-order-big input[name='phone']").mask("8(999)999-99-99");
+				$("#modal-order-big-mobile input[name='phone']").mask("8(999)999-99-99");
 				options = {
 					submitHandler: function(form) {
-						formsubmit(form);
+						mobileSubmit(form);
 						return false;
 					},
 					errorClass: "control-group error",
@@ -140,21 +140,33 @@ $(function(){
 	};
 
 	// отправляем форму
-	var formsubmit = function(form){
+	var mobileSubmit = function(form){
 		ajaxload();
-		setTimeout(function(){
-			$.modal.close();
-			$("#modal-order-true").modal({
-				minHeight: 280,
-				minWidth: 300,
-				maxHeight: 280,
-				maxWidth: 300,
-				opacity: 80,
-				overlayClose: true,
-				focus: false,
-				autoResize: false
-			});
-		},1000);
+        $.ajax({
+            type: "POST",
+            url: $(form).attr("action"),
+            data: $(form).serialize(),
+            dataType: "json",
+            success: function(data){
+                console.log(data);
+                $.modal.close();
+                $("#modal-order-true").modal({
+                    minHeight: 280,
+                    minWidth: 300,
+                    maxHeight: 280,
+                    maxWidth: 300,
+                    opacity: 80,
+                    overlayClose: true,
+                    focus: false,
+                    autoResize: false
+                });
+                return true;
+            },
+            error: function(data){
+                $.modal.close();
+                console.log(data);
+            }
+        });
 	};
 
 });

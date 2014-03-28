@@ -21,8 +21,14 @@ $this->menu=array(
 		'name',
 		'group',
 		'gllr_photos',
-		'category_code',
-		'brand_code',
+        array(
+            'name'=>'category.name',
+            'filter' => CHtml::activeTextField($model->searchCat, 'name')
+        ),
+        array(
+            'name'=>'brand.name',
+            'filter' => CHtml::activeTextField($model->searchBrand, 'name')
+        ),
 //		array(
 //			'name'=>'create_time',
 //			'type'=>'raw',
@@ -35,6 +41,7 @@ $this->menu=array(
 //		),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
+            'template'=>'{update} {delete}',
 		),
 	),
 )); ?>

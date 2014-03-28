@@ -22,7 +22,7 @@ if($favorites):
                  </li>
              -->
             <? foreach($favorites as $f): ?>
-                <li><a title="<?=$f["name"]?>" href="/product?id=<?=$f["id"]?>"><img src="/media/images/item1.jpg" alt="<?=$f["name"]?>" width="80" height="80" ></a></li>
+                <li><a title="<?=$f["name"]?>" href="/product?id=<?=$f["id"]?>"><img src="<?=Product::getMainPhotoUrl($f["gllr_photos"],"small")?>" alt="<?=$f["name"]?>" width="80" height="80" ></a></li>
             <? endforeach; ?>
             </ul>
         </div>

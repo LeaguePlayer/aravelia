@@ -181,12 +181,15 @@ class Structure extends EActiveRecord
 
     public function getTbContextMenu()
     {
-        return TbHtml::buttonDropdown(TbHtml::icon(TbHtml::ICON_TH_LIST), array(
+        $contextMenu = array(
             array('label' => '<b>Открыть</b>', 'url' => array('/admin/structure/updateMaterial', 'node_id'=>$this->id)),
             array('label' => 'Свойства раздела', 'url' => '/admin/structure/update/id/'.$this->id),
             array('label' => 'Добавить подраздел', 'url' => Yii::app()->urlManager->createUrl('/admin/structure/create/', array('parent_id'=>$this->id))),
-            array('label' => 'Удалить раздел', 'url' => array('/admin/structure/delete', 'id'=>$this->id)),
-        ), array('size'=>TbHtml::BUTTON_SIZE_MINI));
+        );
+        if ( !$this->isRoot() ) {
+            $contextMenu[] = array('label' => 'Удалить раздел', 'url' => array('/admin/structure/delete', 'id'=>$this->id));
+        }
+        return TbHtml::buttonDropdown(TbHtml::icon(TbHtml::ICON_TH_LIST), $contextMenu, array('size'=>TbHtml::BUTTON_SIZE_MINI));
     }
 
     public function getTreeName()

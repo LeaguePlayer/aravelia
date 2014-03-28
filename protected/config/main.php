@@ -17,6 +17,7 @@ return array_replace_recursive(
         'import'=>array(
             'application.models.*',
             'application.components.*',
+            'application.extensions.yiimailer.YiiMailer'
             //'application.behaviors.*',
         ),
         'aliases'=>array(
@@ -52,6 +53,9 @@ return array_replace_recursive(
                 'charset' => 'utf8',
                 'tablePrefix' => 'tbl_',
             ),
+            'session' => array(
+                'autoStart' => true,
+            ),
             'authManager' => array(
                 'class' => 'CDbAuthManager',// 'auth.components.CachedDbAuthManager',
                 //'cachingDuration' => 0,
@@ -73,6 +77,9 @@ return array_replace_recursive(
             'yiiwheels' => array(
                 'class' => 'appext.yiiwheels.YiiWheels',
             ),
+            'yiimailer' => array(
+                'class' => 'appext.yiimailer.YiiMailer',
+            ),
             'phpThumb'=>array(
                 'class'=>'appext.EPhpThumb.EPhpThumb',
                 'options'=>array()
@@ -86,6 +93,7 @@ return array_replace_recursive(
                     'gii'=>'gii',
                     'admin'=>'admin/config',
                     '/'=>'site/index',
+                    'page/sertificats'=>'site/sertificats',
                     '<controller:page>/<url:[\w_-]+>'=>'<controller>/view',
                 ),
             ),

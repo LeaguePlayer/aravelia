@@ -19,6 +19,9 @@
 */
 class Product extends EActiveRecord
 {
+    public $searchCat;
+    public $searchBrand;
+
     public function tableName()
     {
         return '{{products}}';
@@ -43,7 +46,8 @@ class Product extends EActiveRecord
     public function relations()
     {
         return array(
-//            "category"=>array(self::BELONGS_TO, "Category", "category_code"),
+            "category"=>array(self::BELONGS_TO, "Category", array("category_code"=>"code")),
+            "brand"=>array(self::BELONGS_TO, "Brand", array("brand_code"=>"code")),
         );
     }
 
@@ -63,6 +67,8 @@ class Product extends EActiveRecord
             'brand_code' => 'Бренд',
             'create_time' => 'Дата создания',
             'update_time' => 'Дата последнего редактирования',
+            'category.name'=>'Категория',
+            'brand.name'=>'Бренд',
         );
     }
 
@@ -99,18 +105,19 @@ class Product extends EActiveRecord
     public function search()
     {
         $criteria=new CDbCriteria;
-		$criteria->compare('id',$this->id);
-		$criteria->compare('code',$this->code,true);
-		$criteria->compare('article',$this->article,true);
-		$criteria->compare('name',$this->name,true);
-		$criteria->compare('wswg_desc',$this->wswg_desc,true);
-		$criteria->compare('country',$this->country,true);
-		$criteria->compare('group',$this->group,true);
-		$criteria->compare('gllr_photos',$this->gllr_photos);
-		$criteria->compare('category_code',$this->category_code,true);
-		$criteria->compare('brand_code',$this->brand_code,true);
-		$criteria->compare('create_time',$this->create_time,true);
-		$criteria->compare('update_time',$this->update_time,true);
+        $criteria->with = array("category","brand");
+		$criteria->compare('t.id',$this->id);
+		$criteria->compare('t.code',$this->code,true);
+		$criteria->compare('t.article',$this->article,true);
+		$criteria->compare('t.name',$this->name,true);
+		$criteria->compare('t.wswg_desc',$this->wswg_desc,true);
+		$criteria->compare('t.country',$this->country,true);
+		$criteria->compare('t.group',$this->group,true);
+		$criteria->compare('t.gllr_photos',$this->gllr_photos);
+		$criteria->compare('category.name',$this->searchCat->name,true);
+		$criteria->compare('brand.name',$this->searchBrand->name,true);
+		$criteria->compare('t.create_time',$this->create_time,true);
+		$criteria->compare('t.update_time',$this->update_time,true);
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
         ));
@@ -121,5 +128,24 @@ class Product extends EActiveRecord
         return parent::model($className);
     }
 
+    public static function getMainPhotoUrl($galleryId = null,$version = null){
+        if($galleryId == null || !is_numeric($galleryId))
+            return "/media/images/no_photo.png";
+
+        $result = Yii::app()->db->createCommand("SELECT
+                                                *
+                                            FROM
+                                                gallery_photo as gp
+                                            WHERE gp.gallery_id={$galleryId} AND gp.main=1")
+            ->queryRow();
+
+        if(!$result)
+            return "/media/images/no_photo.png";
+
+        if($version != null)
+            return "/media/images/".$result["id"].$version.".".$result["ext"];
+
+        return "/media/images/".$result["id"].".".$result["ext"];
+    }
 
 }

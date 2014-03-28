@@ -1,19 +1,4 @@
 $(function(){
-
-    $.ajaxSetup({
-        beforeSend: function(){
-            $.modal.close();
-            ajaxload();
-        },
-        complete: function(){
-            setTimeout(function(){$.modal.close();},1000);
-        },
-        error: function(xhr, text, error){
-            alert("Произошла ошибка при запросе! Обновите страницу или обратитесь к разработчикам!");
-            console.log(xhr, text, error);
-        }
-    });
-
     $("#clear_favorites").on("click", function(){
         $.cookie("favorites", null);
         $(this).parent("section").hide(700);
@@ -42,6 +27,15 @@ $(function(){
                         $("#clear_favorites").triggerHandler("click");
                     }
                 });
+                setTimeout(function(){$.modal.close();},1000);
+            },
+            beforeSend: function(){
+                $.modal.close();
+                ajaxload();
+            },
+            error: function(xhr, text, error){
+                alert("Произошла ошибка при запросе! Обновите страницу или обратитесь к разработчикам!");
+                console.log(xhr, text, error);
             }
         });
         return false;

@@ -23,7 +23,8 @@ class CatalogController extends FrontController
         }
 
         if(isset($_GET["char"])){
-            $char = explode("-", $_GET["char"]);
+//            $char = explode("-", $_GET["char"]);
+            $char = $_GET["char"];
             if(strlen(preg_replace("/[^0-9]/", "", $char[0]))>0){
                 $criteria[] = "c.value_from>=".preg_replace("/[^0-9]/", "", $char[0]);
                 if(count($char) > 1){

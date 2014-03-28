@@ -25,6 +25,20 @@ class PageController extends FrontController
 		);
 	}
 
+    public function actionLanding(){
+        $this->layout = "//layouts/landing";
+
+        $node = Structure::model()->findByUrl("landing");
+        if($node)
+            $data["model"] = $node->getComponent();
+        else
+            throw new CHttpException(404);
+
+        $this->title = $node->name;
+
+        $this->render('landing', $data);
+    }
+
 	
 	public function actionView($url)
 	{
@@ -36,11 +50,43 @@ class PageController extends FrontController
         else
             throw new CHttpException(404);
 
+        $this->title = $node->name;
+
         if($node->id==3){
             $this->layout = "//layouts/landing";
-        }
 
-        $this->title = $node->name;
+            $today = date("Y-m-d H:i:s");
+
+            $data["action"] = Action::model()->find(array(
+                "condition"=>"dt_date > :today",
+                "order"=>"dt_date ASC",
+                "params"=>array(
+                    ":today"=>$today,
+                ),
+            ));
+
+            $data["oldAction"] = Action::model()->find(array(
+                "condition"=>"dt_date < :today",
+                "order"=>"dt_date DESC",
+                "params"=>array(
+                    ":today"=>$today,
+                ),
+            ));
+            $data["oldActionGallery"] = $data["oldAction"]->photoGallery->galleryPhotos;
+
+            $data["concursGallery"] = $data["action"]->concursGallery->galleryPhotos;
+
+            $data["oldActionAll"] = Action::model()->findAll(array(
+                "condition"=>"dt_date < :today",
+                "order"=>"dt_date DESC",
+                "params"=>array(
+                    ":today"=>$today,
+                ),
+            ));
+
+            $this->render("landing", $data);
+            return true;
+        }
 
 		$this->render('view', $data);
 	}

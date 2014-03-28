@@ -6,6 +6,7 @@ class AdminController extends Controller
 {
     public $layout = '/layouts/admin_columns';
 	public $defaultAction = 'list';
+    public $new_order = 0;
 
     public function filters()
     {

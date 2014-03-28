@@ -39,14 +39,6 @@ $cs->registerScriptFile($this->getAssetsUrl().'/js/min/landing.min.js', CClientS
     <meta name="viewport" content="width=device-width">
 
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,800,700,300&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" media="screen" href="css/superfish.css">
-    <link rel="stylesheet" href="css/normalize.min.css">
-    <link rel="stylesheet" href="css/popover.min.css">
-    <link rel="stylesheet" href="css/fancybox/jquery.fancybox.css">
-    <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="css/style.css">
-
-    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
 </head>
 <body class="landing">
 
@@ -59,164 +51,12 @@ $cs->registerScriptFile($this->getAssetsUrl().'/js/min/landing.min.js', CClientS
     </div>
 </nav>
 
-<section class="box-white shadow section">
-    <img src="/media/images/about.jpg" alt="">
-    <h2>О клубе</h2>
-    <p>
-        Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-    </p>
-    <p>
-        Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-    </p>
-    <p>
-        Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-    </p>
-    <div class="clearfix"></div>
-</section>
 
-<section class="box-white shadow section">
-    <img src="/media/images/about.jpg" alt="">
-    <h2>
-        30 декабря<br>
-        Новогодняя сказка в Аравелии
-    </h2>
-    <p>
-        Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-    </p>
-    <p>
-        Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-    </p>
-    <p>
-        <a href="#form-club" class="more_button">Записаться на мероприятие</a>
-    </p>
-    <div class="clearfix"></div>
-</section>
+<?=$content?>
 
-<section class="box-white shadow section">
-    <h2>Посмотрите как прошло прошлое мероприятие</h2>
-    <div id="photo1" class="photo-carousel">
-        <a href="#" class="prev" onclick="return false;"></a>
-        <a href="#" class="next" onclick="return false;"></a>
-
-        <div class="photo-carousel-items">
-            <ul>
-                <li><a href="#"><img src="/media/images/item1.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item2.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item3.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item4.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item5.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item6.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item7.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item1.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item2.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item3.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item4.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item5.jpg" alt="" width="80" height="80" ></a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="video_content">
-        <div class="video">
-            <iframe src="//player.vimeo.com/video/80644479" width="516" height="290" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-        </div>
-        <div class="video_description">
-            <p>
-                Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-            </p>
-            <p>
-                Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-            </p>
-        </div>
-        <div class="clearfix"></div>
-    </div>
-</section>
-
-<section class="box-white shadow section">
-    <h2>Конкурсные работы</h2>
-    <p>
-        Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-    </p>
-    <div class="photos">
-        <a class="fancybox" rel="photos" href="/media/images/item1.jpg" title="Супер пупер"><img src="/media/images/item1.jpg" alt="" /></a>
-        <a class="fancybox" rel="photos" href="/media/images/item1.jpg" title="Супер пупер"><img src="/media/images/item1.jpg" alt="" /></a>
-        <a class="fancybox" rel="photos" href="/media/images/item1.jpg" title="Супер пупер"><img src="/media/images/item1.jpg" alt="" /></a>
-        <a class="fancybox" rel="photos" href="/media/images/item1.jpg" title="Супер пупер"><img src="/media/images/item1.jpg" alt="" /></a>
-        <a class="fancybox" rel="photos" href="/media/images/item1.jpg" title="Супер пупер"><img src="/media/images/item1.jpg" alt="" /></a>
-        <a class="fancybox" rel="photos" href="/media/images/item1.jpg" title="Супер пупер"><img src="/media/images/item1.jpg" alt="" /></a>
-        <a class="fancybox" rel="photos" href="/media/images/item1.jpg" title="Супер пупер"><img src="/media/images/item1.jpg" alt="" /></a>
-        <a class="fancybox" rel="photos" href="/media/images/item1.jpg" title="Супер пупер"><img src="/media/images/item1.jpg" alt="" /></a>
-    </div>
-</section>
-
-<section class="box-white shadow section">
-    <h2>Прошедшие мероприятия</h2>
-    <div id="photo2" class="photo-carousel">
-        <a href="#" class="prev" onclick="return false;"></a>
-        <a href="#" class="next" onclick="return false;"></a>
-
-        <div class="photo-carousel-items">
-            <ul>
-                <li><a href="#"><img src="/media/images/item1.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item2.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item3.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item4.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item5.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item6.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item7.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item1.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item2.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item3.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item4.jpg" alt="" width="80" height="80" ></a></li>
-                <li><a href="#"><img src="/media/images/item5.jpg" alt="" width="80" height="80" ></a></li>
-            </ul>
-        </div>
-    </div>
-</section>
-
-<section class="content width">
-    <h1>Что говорят о нас дети и их родители</h1>
-    <div class="reviews">
-        <div class="review">
-            <div class="review_text">
-                Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-            </div>
-            <div class="review_author">
-                <span class="name">Сергей Долатов</span>
-                <span class="age">6 лет</span>
-            </div>
-        </div>
-        <div class="review">
-            <div class="review_text">
-                Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-                Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-                Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-            </div>
-            <div class="review_author">
-                <span class="name">Сергей Долатов</span>
-                <span class="age">6 лет</span>
-            </div>
-        </div>
-        <div class="review">
-            <div class="review_text">
-                Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-                Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-            </div>
-            <div class="review_author">
-                <span class="name">Сергей Долатов</span>
-                <span class="age">6 лет</span>
-            </div>
-        </div>
-        <div class="review">
-            <div class="review_text">
-                Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
-            </div>
-            <div class="review_author">
-                <span class="name">Сергей Долатов</span>
-                <span class="age">6 лет</span>
-            </div>
-        </div>
-    </div>
-</section>
+<?
+$this->widget('application.components.reviews.reviewsWidget');
+?>
 
 <section class="box-white shadow section">
     <h2>Вступай в клуб!</h2>
@@ -224,15 +64,15 @@ $cs->registerScriptFile($this->getAssetsUrl().'/js/min/landing.min.js', CClientS
         Сплошной фон излучения меньше толщины галактики, так называемых радиозвездах. Света очень велико и радиообъектов после открытия дискретных источников радиоизлучения не. Являются объектами, входящими в перспективе можно надеяться.
     </p>
     <div class="order_club_form">
-        <form id="form-club" action="" method="post">
+        <form id="form-club" action="/site/getclub" method="post">
             <input type="text" name="name" placeholder="Ваше имя">
             <input type="text" name="child_name" placeholder="Имя ребенка">
             <input type="text" name="email" placeholder="E-mail">
             <input type="text" name="child_age" placeholder="Возраст ребенка">
             <input type="text" name="phone" placeholder="Ваш телефон">
-            <select name="" id="">
-                <option value="">Да, участвовать в мероприятиях</option>
-                <option value="">Нет, не участвовать в мероприятиях</option>
+            <select name="status_user" id="">
+                <option value="1">Да, участвовать в мероприятиях</option>
+                <option value="2">Нет, не участвовать в мероприятиях</option>
             </select>
             <input type="submit" class="more_button" value="Отправить">
         </form>
@@ -319,7 +159,9 @@ $cs->registerScriptFile($this->getAssetsUrl().'/js/min/landing.min.js', CClientS
         <div class="modal-title">Вы можете<br>оставить сообщение<br>или задать вопрос</div>
     </div>
     <div class="modal-content">
-        <form method="post">
+        <form method="post" action="/site/feedback">
+            <? Yii::app()->session["feedback_key"] = md5(uniqid()); ?>
+            <input type="hidden" name="key" value="<?=Yii::app()->session["feedback_key"]?>" />
             <input type="text" name="name" placeholder="Ваше имя">
             <input type="text" name="email" placeholder="E-mail">
             <textarea name="message" placeholder="Сообщение" rows="3"></textarea>

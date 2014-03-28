@@ -27,7 +27,7 @@ if(!Yii::app()->request->isAjaxRequest)
                     $price += $p["price"];
             ?>
             <tr>
-                <td class="img_product"><img src="/media/images/item6.jpg" width="40" height="40"></td>
+                <td class="img_product"><img src="<?=Product::getMainPhotoUrl($p["gllr_photos"], "small")?>" width="40" height="40"></td>
                 <td class="link_product"><a target="_blank" href="/product?id=<?=$p["id"]?>"><?=$p["name"]?></a></td>
                 <td class="feature_product"><?=$p["group"]?>, <?=$p["country"]?>, <?=$p["value"]?></td>
                 <td class="count_product">

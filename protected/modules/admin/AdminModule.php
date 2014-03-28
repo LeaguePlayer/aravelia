@@ -30,6 +30,14 @@ class AdminModule extends EWebModule
 	{
 		if(parent::beforeControllerAction($controller, $action))
 		{
+            if(isset($controller->new_order)){
+                $new_order = Yii::app()->db->createCommand()
+                    ->select("count(id) c")
+                    ->from("tbl_orders")
+                    ->where("status=:stat",array(":stat"=>Order::getStatus("new")))
+                    ->queryRow();
+                $controller->new_order = $new_order["c"];
+            }
             $this->registerBootstrap();
             $this->registerCoreScripts();
             return true;
