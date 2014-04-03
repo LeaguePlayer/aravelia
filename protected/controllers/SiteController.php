@@ -26,7 +26,7 @@ class SiteController extends FrontController
         if($_FILES["xmlfile"]){
             SiteHelper::parseXml($_FILES["xmlfile"]);
         }
-
+//        Yii::app()->cache->flush();
         $this->render("xml");
     }
 

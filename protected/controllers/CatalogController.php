@@ -6,6 +6,7 @@ class CatalogController extends FrontController
 
 	public function actionIndex()
 	{
+//        Yii::app()->cache->flush();
         $criteria = array();
         $get = array();
         $redirect = false;
@@ -23,11 +24,10 @@ class CatalogController extends FrontController
         }
 
         if(isset($_GET["char"])){
-//            $char = explode("-", $_GET["char"]);
-            $char = $_GET["char"];
+            $char = explode("-", $_GET["char"]);
             if(strlen(preg_replace("/[^0-9]/", "", $char[0]))>0){
-                $criteria[] = "c.value_from>=".preg_replace("/[^0-9]/", "", $char[0]);
                 if(count($char) > 1){
+                    $criteria[] = "c.value_from>=".preg_replace("/[^0-9]/", "", $char[0]);
                     $criteria[] = "c.value_from<".preg_replace("/[^0-9]/", "", $char[1]);
                     $criteria[] = "c.value_to<".preg_replace("/[^0-9]/", "", $char[1]);
                     $get[] = "char=".preg_replace("/[^0-9]/", "", $char[0])."-".preg_replace("/[^0-9]/", "", $char[1]);
@@ -36,6 +36,7 @@ class CatalogController extends FrontController
                 }
                 else {
                     $get[] = "char=".preg_replace("/[^0-9]/", "", $char[0]);
+                    $criteria[] = "c.value_from=".preg_replace("/[^0-9]/", "", $char[0]);
                     if(strlen($_GET["char"]) != strlen(preg_replace("/[^0-9]/", "", $char[0])))
                         $redirect = true;
                 }
@@ -115,15 +116,7 @@ class CatalogController extends FrontController
                 FROM
                     tbl_products as p
                 RIGHT JOIN
-                    (SELECT
-                        tbl_balances.product_code,
-                        tbl_balances.characteristic_code
-                    FROM
-                        tbl_balances
-                    WHERE
-                        tbl_balances.count>0
-                    GROUP BY
-                        tbl_balances.product_code) as b
+                    tbl_balances as b
                 ON
                     p.code=b.product_code
                 LEFT JOIN
@@ -188,7 +181,8 @@ class CatalogController extends FrontController
                                                                 WHERE
                                                                     ".implode(" AND ", $criteria)."
                                                                 ORDER BY
-                                                                    cat.name ASC) as tbl")->queryAll();
+                                                                    cat.name ASC) as tbl
+                                                            WHERE tbl.id IS NOT NULL")->queryAll();
 
         // передаем GET параметры во вьюху
         $data["get"] = $get;

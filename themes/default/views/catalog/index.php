@@ -24,6 +24,8 @@ $this->title = "Каталог товаров";
             <li <?=($_GET['cat']==$c["id"]) ? 'class="active"' : ''; ?>><a href="/catalog?<?=implode("&",$get_cat)?>&cat=<?=$c["id"]?>"><?=$c["name"]?></a></li>
             <? endforeach; ?>
         </ul>
+        <? else: ?>
+
         <? endif; ?>
         <div class="expand">
             <a href="#" class="show-filter">Развернуть фильтр</a>
@@ -50,11 +52,14 @@ $this->title = "Каталог товаров";
                         </select>
                     <? endif; ?>
 
-                    <select>
-                        <option>Ростовка 116-170</option>
-                        <option>Ростовка 116-170</option>
-                        <option>Ростовка 116-170</option>
+                    <? if($this->cat["girls"]): ?>
+                    <select name="char">
+                        <option>Ростовка</option>
+                        <? foreach($this->cat["girls"] as $k=>$v): ?>
+                            <option value="<?=$k?>"><?=$k?></option>
+                        <? endforeach; ?>
                     </select>
+                    <? endif; ?>
                     <input type="submit" class="more_button" value="Применить фильтр">
                 </form>
             </div>

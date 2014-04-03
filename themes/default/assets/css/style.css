@@ -223,12 +223,14 @@ header .header .cart-wrap .cart:hover h4 {
   left: 0px;
   background-color: #00b9ee;
   z-index: 10;
-  width: 700px;
+  width: 489px;
+  padding-bottom: 20px;
   z-index: -1;
 }
 .top-menu .top-menu-body ul .item .subitems .subitem {
   width: 130px;
-  margin: 20px;
+  margin-left: 20px;
+  margin-top: 20px;
   vertical-align: top;
   padding: 0px;
 }
