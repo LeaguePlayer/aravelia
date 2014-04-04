@@ -107,7 +107,7 @@
             <li class="item">
                 <a href="/catalog?group=Малыши">Малыши</a><span></span>
                 <div class="subitems">
-                    <? if($cat["childs"]): ?>
+                    <? if($this->cat["childs"]): ?>
                     <ul>
                         <? foreach($this->cat["childs"] as $k=>$v): ?>
                             <li class="subitem">

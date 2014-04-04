@@ -9,7 +9,7 @@ class ProductController extends FrontController
         if(!is_numeric($id))
             throw new CHttpException(400, "Неверные параметры запроса");
 
-        $data["model"] = Product::model()->findByPk($id);
+        $data["model"] = Product::model()->findByPk($id, array("condition"=>"`status`=1"));
 
         if(!$data["model"])
             throw new CHttpException(404, "Страница не найдена");

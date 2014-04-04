@@ -128,6 +128,11 @@ class SiteHelper {
         set_time_limit(300);
         $start = microtime(true);
 
+        Yii::app()->db->createCommand()
+            ->update("tbl_products", array(
+                "status"=>"2",
+            ));
+
         if($file["error"] != "0")
             die("Произошла ошибка: ".$file["error"]);
 
@@ -178,7 +183,7 @@ class SiteHelper {
             $datetime = date("Y-m-d H:i:s");
             $product_row = Yii::app()->db->createCommand()->select("*")->from("tbl_products")->where("code=:code", array(":code"=>$code))->queryRow();
             if($product_row){
-                $query .= "UPDATE tbl_products SET code='{$code}', article='{$article}', `name`='{$name}', `group`='{$group}', country='{$country}', category_code='{$category_code}', brand_code='{$brand_code}'";
+                $query .= "UPDATE tbl_products SET code='{$code}', article='{$article}', `name`='{$name}', `group`='{$group}', country='{$country}', `status`=1, category_code='{$category_code}', brand_code='{$brand_code}'";
                 if(!empty($desc)){
                     $query .= ", wswg_desc='{$desc}'";
                 }

@@ -16,6 +16,9 @@ class FrontController extends Controller
 
     public function init() {
         parent::init();
+
+//        Yii::app()->cache->flush();
+
         $this->title = Yii::app()->name;
 
         // Формируем верхнее меню
@@ -24,16 +27,16 @@ class FrontController extends Controller
                     DISTINCT(c.value_from)
                 FROM
                     tbl_products as p
-                RIGHT JOIN
+                LEFT JOIN
                     tbl_balances as b
                 ON
                     p.code=b.product_code
-                RIGHT JOIN
+                LEFT JOIN
                     tbl_characteristics as c
                 ON
                     b.characteristic_code=c.code
                 WHERE
-                    p.`group`='Девочка'
+                    p.`group`='Девочка' AND c.value_from>=86
                 ORDER BY
                     c.value_from ASC";
         $charac['girls'] = Yii::app()->db->cache(86400)->createCommand($query)->queryAll();
@@ -70,16 +73,16 @@ class FrontController extends Controller
                     DISTINCT(c.value_from)
                 FROM
                     tbl_products as p
-                RIGHT JOIN
+                LEFT JOIN
                     tbl_balances as b
                 ON
                     p.code=b.product_code
-                RIGHT JOIN
+                LEFT JOIN
                     tbl_characteristics as c
                 ON
                     b.characteristic_code=c.code
                 WHERE
-                    p.`group`='Мальчик'
+                    p.`group`='Мальчик' AND c.value_from>=86
                 ORDER BY
                     c.value_from ASC";
         $charac['boys'] = Yii::app()->db->cache(86400)->createCommand($query)->queryAll();
@@ -116,16 +119,16 @@ class FrontController extends Controller
                     DISTINCT(c.value_from)
                 FROM
                     tbl_products as p
-                RIGHT JOIN
+                LEFT JOIN
                     tbl_balances as b
                 ON
                     p.code=b.product_code
-                RIGHT JOIN
+                LEFT JOIN
                     tbl_characteristics as c
                 ON
                     b.characteristic_code=c.code
                 WHERE
-                    p.`group`='Малыши'
+                    c.value_from<=86
                 ORDER BY
                     c.value_from ASC";
         $charac['childs'] = Yii::app()->db->cache(86400)->createCommand($query)->queryAll();

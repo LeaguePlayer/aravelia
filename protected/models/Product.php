@@ -27,6 +27,23 @@ class Product extends EActiveRecord
         return '{{products}}';
     }
 
+    public function __get($name){
+        if($name == 'issetPhoto') {
+            if(!is_numeric($this->gllr_photos))
+                return "Нет";
+            $result = Yii::app()->db->createCommand("SELECT
+                                                *
+                                            FROM
+                                                gallery_photo as gp
+                                            WHERE gp.gallery_id={$this->gllr_photos}")
+                ->queryRow();
+            if($result && count($result)>0)
+                return "Есть";
+            else
+                return "Нет";
+        }
+        return parent::__get($name);
+    }
 
     public function rules()
     {
@@ -38,7 +55,7 @@ class Product extends EActiveRecord
             array('name, country', 'length', 'max'=>255),
             array('wswg_desc, create_time, update_time', 'safe'),
             // The following rule is used by search().
-            array('id, code, article, name, wswg_desc, country, group, gllr_photos, category_code, brand_code, create_time, update_time', 'safe', 'on'=>'search'),
+            array('id, code, article, name, wswg_desc, country, group, gllr_photos, category_code, brand_code, status, create_time, update_time', 'safe', 'on'=>'search'),
         );
     }
 
@@ -65,6 +82,7 @@ class Product extends EActiveRecord
             'gllr_photos' => 'Фотки',
             'category_code' => 'Категория',
             'brand_code' => 'Бренд',
+            'status' => 'Статус',
             'create_time' => 'Дата создания',
             'update_time' => 'Дата последнего редактирования',
             'category.name'=>'Категория',
@@ -113,6 +131,7 @@ class Product extends EActiveRecord
 		$criteria->compare('t.wswg_desc',$this->wswg_desc,true);
 		$criteria->compare('t.country',$this->country,true);
 		$criteria->compare('t.group',$this->group,true);
+		$criteria->compare('t.status',$this->status,true);
 		$criteria->compare('t.gllr_photos',$this->gllr_photos);
 		$criteria->compare('category.name',$this->searchCat->name,true);
 		$criteria->compare('brand.name',$this->searchBrand->name,true);
@@ -146,6 +165,16 @@ class Product extends EActiveRecord
             return "/media/images/".$result["id"].$version.".".$result["ext"];
 
         return "/media/images/".$result["id"].".".$result["ext"];
+    }
+
+    public static function getStatusLabel($id = null){
+        $status = array(
+            1 => 'Опубликован',
+            2 => 'Не опубликован',
+        );
+        if($id != null)
+            return $status[$id];
+        return $status;
     }
 
 }

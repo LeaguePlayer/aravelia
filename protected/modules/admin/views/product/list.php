@@ -6,7 +6,8 @@ $this->menu=array(
 
 <h1>Управление товарами</h1>
 
-<?php $this->widget('bootstrap.widgets.TbGridView',array(
+<?php
+$this->widget('bootstrap.widgets.TbGridView',array(
 	'id'=>'product-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
@@ -20,7 +21,10 @@ $this->menu=array(
 		'article',
 		'name',
 		'group',
-		'gllr_photos',
+        array(
+            'name'=>'gllr_photos',
+            'value'=>'$data->issetPhoto',
+        ),
         array(
             'name'=>'category.name',
             'filter' => CHtml::activeTextField($model->searchCat, 'name')
@@ -39,6 +43,11 @@ $this->menu=array(
 //			'type'=>'raw',
 //			'value'=>'$data->update_time ? SiteHelper::russianDate($data->update_time).\' в \'.date(\'H:i\', strtotime($data->update_time)) : ""'
 //		),
+        array(
+            'name'=>'status',
+            'filter'=>Product::getStatusLabel(),
+            'value' =>'Product::getStatusLabel($data->status)',
+        ),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
             'template'=>'{update} {delete}',

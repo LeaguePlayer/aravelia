@@ -11,11 +11,20 @@ class CatalogController extends FrontController
         $get = array();
         $redirect = false;
 
+        $criteria[] = "p.`status`=1";
         if(isset($_GET["group"])){
-            $criteria[] = "p.`group`='".mb_ereg_replace("/[^А-Яа-я]/", "", $_GET["group"])."'";
-            $get[] = "group=".mb_ereg_replace("/[^А-Яа-я]/", "", $_GET["group"]);
-            if(strlen($_GET["group"]) != strlen(mb_ereg_replace("/[^А-Яа-я]/", "", $_GET["group"])))
-                $redirect = true;
+            if($_GET["group"] != "Малыши"){
+                $criteria[] = "p.`group`='".mb_ereg_replace("/[^А-Яа-я]/", "", $_GET["group"])."'";
+                $get[] = "group=".mb_ereg_replace("/[^А-Яа-я]/", "", $_GET["group"]);
+                if(strlen($_GET["group"]) != strlen(mb_ereg_replace("/[^А-Яа-я]/", "", $_GET["group"])))
+                    $redirect = true;
+            }
+            else {
+                $get[] = "group=Малыши";
+                if(!isset($_GET["char"])){
+                    $_GET["char"] = "0-86";
+                }
+            }
         }
         else {
             $criteria[] = "p.`group`='Девочка'";
@@ -110,7 +119,7 @@ class CatalogController extends FrontController
         $data["pages"]->pageVar = "page";
 
         $query = "SELECT
-                    p.id,
+                    distinct(p.id) id,
                     p.name,
                     gp.id photo_id
                 FROM
