@@ -16,6 +16,14 @@ $(function(){
                 }
             });
         }
+
+        $("#form-product_add").on("change","#size",function(){
+            $_sel_val = $("#form-product_add #size option:selected").html();
+            $("#sizes_info").css("display","none");
+            $("#sizes_info span").css("display","none");
+            $("#sizes_info").css("display","inherit");
+            $("#size-"+$_sel_val).css("display","inherit");
+        });
     });
 
 
@@ -77,16 +85,19 @@ $(function(){
         $(this).html("Удалить из избранных");
 		setTimeout(function(){
 			$.modal.close();
-			$("#modal-addFavorite").modal({
-				minHeight: 255,
-				minWidth: 300,
-				maxHeight: 255,
-				maxWidth: 300,
-				opacity: 80,
-				overlayClose: true,
-				focus: false,
-				autoResize: false
-			});
+            if($.cookie("favorites_modal") != "true") {
+                $("#modal-addFavorite").modal({
+                    minHeight: 255,
+                    minWidth: 300,
+                    maxHeight: 255,
+                    maxWidth: 300,
+                    opacity: 80,
+                    overlayClose: true,
+                    focus: false,
+                    autoResize: false
+                });
+                $.cookie("favorites_modal", "true");
+            }
             favoriteAdd();
 		},500);
 		return false;

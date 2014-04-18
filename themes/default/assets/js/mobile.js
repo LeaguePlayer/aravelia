@@ -13,7 +13,7 @@ $(function(){
 			focus: false,
 			autoResize: false,
 			onShow: function(dialog){
-				$("#modal-order-mobile input[name='phone']").mask("8(999)999-99-99");
+				$("#modal-order-mobile input[name='phone']").mask("8 (999) 999-99-99");
 				// Валидация формы
 				options = {
 					submitHandler: function(form) {
@@ -73,7 +73,7 @@ $(function(){
 			autoResize: false,
 			onShow: function(dialog){
 				// Валидация формы
-				$("#modal-order-big-mobile input[name='phone']").mask("8(999)999-99-99");
+				$("#modal-order-big-mobile input[name='phone']").mask("8 (999) 999-99-99");
 				options = {
 					submitHandler: function(form) {
 						mobileSubmit(form);

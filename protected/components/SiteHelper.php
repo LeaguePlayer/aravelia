@@ -127,19 +127,15 @@ class SiteHelper {
     public static function parseXml($file){
         set_time_limit(300);
         $start = microtime(true);
+        if(file_exists($file))
+            die("Файл не найден!");
+
+        $xml = simplexml_load_file($file);
 
         Yii::app()->db->createCommand()
             ->update("tbl_products", array(
                 "status"=>"2",
             ));
-
-        if($file["error"] != "0")
-            die("Произошла ошибка: ".$file["error"]);
-
-        if($file["type"] != "text/xml")
-            die("Файл должен быть в формате XML");
-
-        $xml = simplexml_load_file($file["tmp_name"]);
 
         // обрабатываем производителей
         $query = "";
@@ -297,6 +293,6 @@ class SiteHelper {
             Yii::app()->db->createCommand($query)->execute();
 
         echo 'Время выполнения скрипта: '.(microtime(true) - $start).' сек.<br>';
-//        echo 'Время выполнения скрипта: '.(microtime(true) - $start).' сек.<br>';
+        Yii::app()->cache->flush();
     }
 }

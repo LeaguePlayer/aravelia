@@ -32,6 +32,13 @@ class CatalogController extends FrontController
             $redirect=true;
         }
 
+        if(isset($_GET["type"])){
+            if(is_numeric($_GET["type"])){
+                $criteria[] = "cat.type_id={$_GET["type"]}";
+                $get[] = "type={$_GET["type"]}";
+            }
+        }
+
         if(isset($_GET["char"])){
             $char = explode("-", $_GET["char"]);
             if(strlen(preg_replace("/[^0-9]/", "", $char[0]))>0){
@@ -161,6 +168,20 @@ class CatalogController extends FrontController
         $data["groups"] = Yii::app()->db->createCommand()
             ->select("distinct(`group`)")
             ->from("tbl_products")
+            ->queryAll();
+
+        $grid = 0;
+        $tid = 1;
+        if($_GET["group"] == "Мальчик")
+            $grid = 1;
+        else if($_GET["group"] == "Малыши")
+            $grid = 2;
+        if(isset($_GET["type"]))
+            $tid = $_GET["type"];
+        $data["sizes"] = Yii::app()->db->createCommand()
+            ->select("*")
+            ->from("tbl_sizes")
+            ->where(array("and", "group_id={$grid}","type_id={$tid}"))
             ->queryAll();
 
         $key = array_search("cat.id=".$_GET["cat"], $criteria);

@@ -42,6 +42,9 @@ form .line{
 .grid-view tbody tr{
   background-color: #eff;
 }
+.grid-view tbody tr.status_2 {
+    background-color: #ffffff;
+}
 .grid-view tbody .sort{
   cursor: move;
 }

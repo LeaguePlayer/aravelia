@@ -1,6 +1,6 @@
 <?php
 $this->menu=array(
-	array('label'=>'Добавить','url'=>array('create')),
+//	array('label'=>'Добавить','url'=>array('create')),
 );
 ?>
 

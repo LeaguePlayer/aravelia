@@ -1,22 +1,7 @@
-<!--	--><?php //echo $form->textFieldControlGroup($model,'code',array('class'=>'span8','maxlength'=>20)); ?>
-<!---->
-<!--	--><?php //echo $form->textFieldControlGroup($model,'article',array('class'=>'span8','maxlength'=>100)); ?>
-<!---->
-	<?php echo $form->textFieldControlGroup($model,'name',array('class'=>'span8','maxlength'=>255)); ?>
-<!---->
-<!--	<div class='control-group'>-->
-<!--		--><?php //echo CHtml::activeLabelEx($model, 'wswg_desc'); ?>
-<!--		--><?php //$this->widget('appext.ckeditor.CKEditorWidget', array('model' => $model, 'attribute' => 'wswg_desc', 'config' => array('width' => '100%')
-//		)); ?>
-<!--		--><?php //echo $form->error($model, 'wswg_desc'); ?>
-<!--	</div>-->
-<!---->
-<!--	--><?php //echo $form->textFieldControlGroup($model,'country',array('class'=>'span8','maxlength'=>255)); ?>
-<!---->
-<!--	--><?php //echo $form->textFieldControlGroup($model,'group',array('class'=>'span8','maxlength'=>100)); ?>
+	<?php echo $form->hiddenField($model,'name',array('class'=>'span8','maxlength'=>255)); ?>
 
 	<div class='control-group'>
-		<?php echo CHtml::activeLabelEx($model, 'gllr_photos'); ?>
+		<p><b>Фото</b></p>
 		<?php if ($model->galleryBehaviorPhotos->getGallery() === null) {
 			echo '<p class="help-block">Прежде чем загружать изображения, нужно сохранить текущее состояние</p>';
 		} else {
@@ -26,8 +11,39 @@
 			));
 		} ?>
 	</div>
-
-<!--	--><?php //echo $form->textFieldControlGroup($model,'category_code',array('class'=>'span8','maxlength'=>20)); ?>
-<!---->
-<!--	--><?php //echo $form->textFieldControlGroup($model,'brand_code',array('class'=>'span8','maxlength'=>20)); ?>
+    <p><b>Характеристики</b></p>
+    <table class="table table-striped">
+        <tr>
+            <td>Код в 1С</td>
+            <td><?=$model->code?></td>
+        </tr>
+        <tr>
+            <td>Артикул</td>
+            <td><?=$model->article?></td>
+        </tr>
+        <tr>
+            <td>Название</td>
+            <td><?=$model->name?></td>
+        </tr>
+        <tr>
+            <td>Категория</td>
+            <td><?=$model->category->name?></td>
+        </tr>
+        <tr>
+            <td>Бренд</td>
+            <td><?=$model->brand->name?></td>
+        </tr>
+        <tr>
+            <td>Описание</td>
+            <td><?=$model->wswg_desc?></td>
+        </tr>
+        <tr>
+            <td>Страна</td>
+            <td><?=$model->country?></td>
+        </tr>
+        <tr>
+            <td>Группа</td>
+            <td><?=$model->group?></td>
+        </tr>
+    </table>
 

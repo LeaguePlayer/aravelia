@@ -26,7 +26,7 @@ class Category extends EActiveRecord
             array('name', 'length', 'max'=>255),
             array('create_time, update_time', 'safe'),
             // The following rule is used by search().
-            array('id, code, name, create_time, update_time', 'safe', 'on'=>'search'),
+            array('id, code, name, type_id, create_time, update_time', 'safe', 'on'=>'search'),
         );
     }
 
@@ -34,6 +34,7 @@ class Category extends EActiveRecord
     public function relations()
     {
         return array(
+            'type'=>array(self::BELONGS_TO, 'Categorytype', 'type_id'),
         );
     }
 
@@ -44,6 +45,7 @@ class Category extends EActiveRecord
             'id' => 'ID',
             'code' => 'Код в 1С',
             'name' => 'Название',
+            'type_id' => 'Тип категории',
             'create_time' => 'Дата создания',
             'update_time' => 'Дата последнего редактирования',
         );
@@ -68,6 +70,7 @@ class Category extends EActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('code',$this->code,true);
 		$criteria->compare('name',$this->name,true);
+		$criteria->compare('type_id',$this->type->id,true);
 		$criteria->compare('create_time',$this->create_time,true);
 		$criteria->compare('update_time',$this->update_time,true);
         return new CActiveDataProvider($this, array(
@@ -78,6 +81,10 @@ class Category extends EActiveRecord
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
+    }
+
+    public function translition(){
+        return "Категории";
     }
 
 

@@ -11,7 +11,7 @@ class ConfigController extends AdminController
 
     public function actionUpdate()
     {
-        $configs = Config::model()->findAll();
+        $configs = Config::model()->findAll(array("order"=>"id ASC"));
         $confArray = array();
         foreach ( $configs as $config ) {
             $confArray[$config->id] = $config;

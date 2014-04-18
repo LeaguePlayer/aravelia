@@ -63,7 +63,7 @@
     <div class="video_content">
         <? if($oldAction->video): ?>
         <div class="video">
-            <iframe src="//player.vimeo.com/video/<?=($oldAction->video)?>" width="516" height="290" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+            <?=($oldAction->video)?>
         </div>
         <? endif; ?>
         <div class="video_description">

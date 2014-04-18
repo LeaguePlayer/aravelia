@@ -22,6 +22,24 @@ class ProductController extends FrontController
             ->order("c.value_from ASC")
             ->queryAll();
 
+        if($data["sizes"]){
+            foreach($data["sizes"] as $s){
+                $insize[] = $s["value"];
+            }
+        }
+
+        $gid = 0;
+        if($data["model"]->group=="Мальчик")
+            $gid=1;
+        else if($data["model"]->group=="Малыши")
+            $gid=2;
+
+        $data["sizes_info"] = Yii::app()->db->createCommand()
+            ->select("*")
+            ->from("tbl_sizes")
+            ->where(array("and", "group_id={$gid}", array("in", "size", $insize)))
+            ->queryAll();
+
         $data["photos"] = $data["model"]->getGalleryPhotos();
 
         $cs = Yii::app()->clientScript;

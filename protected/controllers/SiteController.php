@@ -17,17 +17,64 @@ class SiteController extends FrontController
         else
             throw new CHttpException(404);
 
-        $this->title = $data["model"]->title;
+        $catType = Yii::app()->config->get("index.cat");
+
+        if($catType==="0"){
+            $minId = Yii::app()->db->createCommand("SELECT	min(id) minid FROM tbl_products")->queryRow();
+            $maxId = Yii::app()->db->createCommand("SELECT	max(id) maxid FROM tbl_products")->queryRow();
+            $randId = array();
+            for($i=0;$i<8;$i++){
+                $randId[] = $this->randid($randId,array($minId["minid"],$maxId["maxid"]));
+            }
+            $data["products"] = Yii::app()->db->createCommand()
+                                                    ->select("*")
+                                                    ->from("tbl_products")
+                                                    ->where(array('in', 'id', $randId))
+                                                    ->queryAll();
+        }
+        else {
+            $countProd = Yii::app()->db->createCommand("SELECT	count(id) `count` FROM tbl_products")->queryRow();
+            $data["products"] = Yii::app()->db->createCommand()
+                ->select("p.id, p.name, p.gllr_photos")
+                ->from("tbl_products p")
+                ->leftJoin("tbl_categories c", "p.category_code=c.code")
+                ->where("c.type_id=:catType", array(":catType"=>$catType))
+                ->limit(8,rand(0,$countProd["count"]-9))
+                ->queryAll();
+        }
+
+        if ( !empty($node->seo->meta_title) )
+            $this->title = $node->seo->meta_title.' | '.Yii::app()->config->get('app.name');
+        else
+            $this->title = $node->name . ' | ' . Yii::app()->config->get('app.name');
 
 		$this->render('index', $data);
 	}
 
-    public function actionXml(){
-        if($_FILES["xmlfile"]){
-            SiteHelper::parseXml($_FILES["xmlfile"]);
-            Yii::app()->cache->flush();
+    public function actionXml($key){
+        if($key=="98Zou10EvXq6cCI"){
+            $file = __DIR__."/../../exchange_data/data.xml";
+            if(file_exists(__DIR__."/../../exchange_data/data.xml")){
+                SiteHelper::parseXml($file);
+                Yii::app()->cache->flush();
+                rename(__DIR__."/../../exchange_data/data.xml",__DIR__."/../../exchange_data/data0.xml");
+                for($i=5;$i>=0;$i--){
+                    if(file_exists(__DIR__."/../../exchange_data/data6.xml") && $i==5){
+                        unlink(__DIR__."/../../exchange_data/data6.xml");
+                    }
+                    if(file_exists(__DIR__."/../../exchange_data/data{$i}.xml")){
+                        $num = $i+1;
+                        rename(__DIR__."/../../exchange_data/data{$i}.xml",__DIR__."/../../exchange_data/data{$num}.xml");
+                    }
+                    continue;
+                }
+            }
+            else {
+                die("Файл не найден!.");
+            }
         }
-        $this->render("xml");
+        else
+            throw new CHttpException(404);
     }
 
     public function actionSertificats(){
@@ -75,8 +122,12 @@ class SiteController extends FrontController
             throw new CHttpException(404);
 
         $data["sertificats"] = Certificate::model()->findAll();
+        $data["address"] = explode("\n", Yii::app()->config->get("sert.address"));
 
-        $this->title = $data["model"]->title;
+        if ( !empty($node->seo->meta_title) )
+            $this->title = $node->seo->meta_title.' | '.Yii::app()->config->get('app.name');
+        else
+            $this->title = $node->name . ' | ' . Yii::app()->config->get('app.name');
 
         $this->render('sertificats', $data);
     }
@@ -157,6 +208,8 @@ class SiteController extends FrontController
             $model->attributes = $_POST;
             $model->comment = $_POST["messages"];
             $model->type = Order::getType("product");
+            if(isset($_POST["mobile"]) && $_POST["mobile"]=="true")
+                $model->type = Order::getType("mobile");
             $model->create_time = date("Y-m-d H:i:s");
             if($model->save()){
 
@@ -259,4 +312,12 @@ class SiteController extends FrontController
 				$this->render('error', $error);
 		}
 	}
+
+    public function randid($arrayId,$arrayMinMax){
+        $randId = rand($arrayMinMax[0],$arrayMinMax[1]);
+        if(array_search($randId,$arrayId))
+            return $this->randid($arrayId,$arrayMinMax);
+        else
+            return $randId;
+    }
 }

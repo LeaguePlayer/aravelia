@@ -25,14 +25,14 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
-    <title><?=$this->title?> / Aravelia</title>
+    <title><?=$this->title?></title>
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="keywords" content="">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-
+    <script src="http://api-maps.yandex.ru/2.0-stable/?load=package.standard&lang=ru_RU" type="text/javascript"></script>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,600,800,700,300&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
 </head>
 <body>
@@ -65,15 +65,27 @@
             <li class="item">
                 <a href="/catalog?group=Девочка">Девочка</a><span></span>
                 <div class="subitems">
-                    <? if($this->cat["girls"]): ?>
+                    <? if($this->cat["girls"]):
+                        foreach($this->cat["girls"] as $cg):
+                    ?>
+                    <ul class="subitem-title">
+                        <li class="subitem">
+                            <a href="/catalog?group=Девочка&type=<?=$cg["id"]?>"><?=$cg["name"]?></a>
+                        </li>
+                    </ul>
+                    <? if(count($cg["items"])>0): ?>
                     <ul>
-                        <? foreach($this->cat["girls"] as $k=>$v): ?>
+                        <? foreach($cg["items"] as $v): ?>
                             <li class="subitem">
-                                <a href="/catalog?group=Девочка&char=<?=$k?>"><?=$k?></a>
+                                <a href="/catalog?group=Девочка&type=<?=$cg["id"]?>&char=<?=$v["value_from"]."-".$v["value_to"]?>">от <?=$v["value_from"]?> до <?=$v["value_to"]?></a>
                                 <ul>
-                                    <? foreach($v as $c): ?>
-                                        <li><a href="/catalog?group=Девочка&char=<?=$k?>&cat=<?=$c["id"]?>"><?=$c["name"]?></a></li>
-                                    <? endforeach; ?>
+                                    <? if(count($v["items"])>0): ?>
+                                        <? foreach($v["items"] as $c): ?>
+                                            <li><a href="/catalog?group=Девочка&type=<?=$cg["id"]?>&char=<?=$v["value_from"]."-".$v["value_to"]?>&cat=<?=$c["id"]?>"><?=$c["name"]?></a></li>
+                                        <? endforeach; ?>
+                                    <? else: ?>
+                                        <ul><li class="subitem"><a href="#">Нет товаров</a></li></ul>
+                                    <? endif; ?>
                                 </ul>
                             </li>
                         <? endforeach; ?>
@@ -81,48 +93,84 @@
                     <? else: ?>
                         <ul><li class="subitem"><a href="#">Нет товаров</a></li></ul>
                     <? endif; ?>
+                    <?
+                    endforeach;
+                    endif;
+                    ?>
                 </div>
             </li>
             <li class="item">
                 <a href="/catalog?group=Мальчик">Мальчик</a><span></span>
                 <div class="subitems">
-                    <? if($this->cat["boys"]): ?>
-                    <ul>
-                        <? foreach($this->cat["boys"] as $k=>$v): ?>
-                            <li class="subitem">
-                                <a href="/catalog?group=Мальчик&char=<?=$k?>"><?=$k?></a>
-                                <ul>
-                                    <? foreach($v as $c): ?>
-                                        <li><a href="/catalog?group=Мальчик&char=<?=$k?>&cat=<?=$c["id"]?>"><?=$c["name"]?></a></li>
-                                    <? endforeach; ?>
-                                </ul>
-                            </li>
-                        <? endforeach; ?>
-                    </ul>
-                    <? else: ?>
-                        <ul><li class="subitem"><a href="#">Нет товаров</a></li></ul>
-                    <? endif; ?>
+                    <? if($this->cat["boys"]):
+                        foreach($this->cat["boys"] as $cg):
+                            ?>
+                            <ul class="subitem-title">
+                                <li class="subitem">
+                                    <a href="/catalog?group=Мальчик&type=<?=$cg["id"]?>"><?=$cg["name"]?></a>
+                                </li>
+                            </ul>
+                            <? if(count($cg["items"])>0): ?>
+                            <ul>
+                                <? foreach($cg["items"] as $v): ?>
+                                    <li class="subitem">
+                                        <a href="/catalog?group=Мальчик&type=<?=$cg["id"]?>&char=<?=$v["value_from"]."-".$v["value_to"]?>">от <?=$v["value_from"]?> до <?=$v["value_to"]?></a>
+                                        <ul>
+                                            <? if(count($v["items"])>0): ?>
+                                                <? foreach($v["items"] as $c): ?>
+                                                    <li><a href="/catalog?group=Мальчик&type=<?=$cg["id"]?>&char=<?=$v["value_from"]."-".$v["value_to"]?>&cat=<?=$c["id"]?>"><?=$c["name"]?></a></li>
+                                                <? endforeach; ?>
+                                            <? else: ?>
+                                                <ul><li class="subitem"><a href="#">Нет товаров</a></li></ul>
+                                            <? endif; ?>
+                                        </ul>
+                                    </li>
+                                <? endforeach; ?>
+                            </ul>
+                        <? else: ?>
+                            <ul><li class="subitem"><a href="#">Нет товаров</a></li></ul>
+                        <? endif; ?>
+                        <?
+                        endforeach;
+                    endif;
+                    ?>
                 </div>
             </li>
             <li class="item">
                 <a href="/catalog?group=Малыши">Малыши</a><span></span>
                 <div class="subitems">
-                    <? if($this->cat["childs"]): ?>
-                    <ul>
-                        <? foreach($this->cat["childs"] as $k=>$v): ?>
-                            <li class="subitem">
-                                <a href="/catalog?group=Малыши&char=<?=$k?>"><?=$k?></a>
-                                <ul>
-                                    <? foreach($v as $c): ?>
-                                        <li><a href="/catalog?group=Малыши&char=<?=$k?>&cat=<?=$c["id"]?>"><?=$c["name"]?></a></li>
-                                    <? endforeach; ?>
-                                </ul>
-                            </li>
-                        <? endforeach; ?>
-                    </ul>
-                    <? else: ?>
-                        <ul><li class="subitem"><a href="#">Нет товаров</a></li></ul>
-                    <? endif; ?>
+                    <? if($this->cat["childs"]):
+                        foreach($this->cat["childs"] as $cg):
+                            ?>
+                            <ul class="subitem-title">
+                                <li class="subitem">
+                                    <a href="/catalog?group=Малыши&type=<?=$cg["id"]?>"><?=$cg["name"]?></a>
+                                </li>
+                            </ul>
+                            <? if(count($cg["items"])>0): ?>
+                            <ul>
+                                <? foreach($cg["items"] as $v): ?>
+                                    <li class="subitem">
+                                        <a href="/catalog?group=Малыши&type=<?=$cg["id"]?>&char=<?=$v["value_from"]."-".$v["value_to"]?>">от <?=$v["value_from"]?> до <?=$v["value_to"]?></a>
+                                        <ul>
+                                            <? if(count($v["items"])>0): ?>
+                                                <? foreach($v["items"] as $c): ?>
+                                                    <li><a href="/catalog?group=Малыши&type=<?=$cg["id"]?>&char=<?=$v["value_from"]."-".$v["value_to"]?>&cat=<?=$c["id"]?>"><?=$c["name"]?></a></li>
+                                                <? endforeach; ?>
+                                            <? else: ?>
+                                                <ul><li class="subitem"><a href="#">Нет товаров</a></li></ul>
+                                            <? endif; ?>
+                                        </ul>
+                                    </li>
+                                <? endforeach; ?>
+                            </ul>
+                        <? else: ?>
+                            <ul><li class="subitem"><a href="#">Нет товаров</a></li></ul>
+                        <? endif; ?>
+                        <?
+                        endforeach;
+                    endif;
+                    ?>
                 </div>
             </li>
             <li class="item">
@@ -234,7 +282,7 @@
         <div class="footer width">
             <p class="copyright">© 2013, ООО «<span>Аравелия</span>»</p>
             <p class="adress">Тюмень, ул. Луговая 2-я, 30, ТРЦ “Па-На-Ма”, 3-й этаж</p>
-            <a href="http://amobile-studio.ru" class="a-mobile">Всегда только лучшие идеи</a>
+            <a target="_blank" href="http://amobile-studio.ru" class="a-mobile">Всегда только лучшие идеи</a>
         </div>
     </div>
 </footer>
@@ -267,7 +315,8 @@
         </p>
     </div>
     <div class="modal-footer">
-        <a href="/" class="more_button">В клуб</a>
+        <a href="/page/landing" class="more_button">В клуб</a>
+        <a href="/" class="more_button">В интернет-магазин</a>
     </div>
 </div>
 
@@ -280,7 +329,8 @@
         <form method="post" action="/site/order">
             <input type="text" name="name" placeholder="Ваше имя">
             <input type="text" name="phone" placeholder="Телефон">
-            <input type="submit" class="more_button" value="Отправить">
+            <input style="float: right" type="submit" class="more_button" value="Отправить">
+            <label class="mobile-checkbox"><span style="margin-top: 3px;"><input type="checkbox" name="mobile" value="true" /></span><span style="width: 90px; margin-left: 5px">Мобильный продавец</span></label>
         </form>
     </div>
     <div class="modal-footer">
@@ -387,7 +437,8 @@
         </p>
     </div>
     <div class="modal-footer">
-        <a href="/" class="more_button">В клуб</a>
+        <a href="/page/landing" class="more_button">В клуб</a>
+        <a href="/" class="more_button">В интернет-магазин</a>
     </div>
 </div>
 

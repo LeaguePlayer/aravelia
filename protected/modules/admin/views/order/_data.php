@@ -28,7 +28,7 @@
     endif;
     ?>
 
-    <? if($model->type == Order::getType("product")):
+    <? if($model->type == Order::getType("product") || $model->type == Order::getType("mobile")):
         $orderProducts = $model->orderProducts;
         if($orderProducts):
             ?>
@@ -47,7 +47,7 @@
                         <td><?=($k+1)?></td>
                         <td><a target="_blank" href="/admin/product/update/id/<?=$p->product_id?>"><?=$p->product->name?></a></td>
                         <td><?=$p->product->article?></td>
-                        <td>1</td>
+                        <td><?=$p->size?></td>
                         <td><?=$p->count?> шт.</td>
                         <td><?=number_format($p->price,2,"."," ")?> руб.</td>
                     </tr>

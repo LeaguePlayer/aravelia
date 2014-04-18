@@ -83,63 +83,56 @@ $this->widget('application.components.reviews.reviewsWidget');
     </div>
 </section>
 
-<nav class="bottom-menu width">
-    <ul>
-        <li><a href="/page/2">О компании</a></li>
-        <li><a href="/page/3">Детский клуб</a></li>
-        <li><a href="/page/4">Мобильный продавец</a></li>
-        <li><a href="/page/5">Подарочные сертификаты</a></li>
-        <li><a href="/page/6">Контакты</a></li>
-    </ul>
-</nav>
+<? if($this->mainMenu): ?>
+    <nav class="bottom-menu width">
+        <ul>
+            <? foreach($this->mainMenu as $m): ?>
+                <li><a href="<?=$m["url"]?>"><?=$m["label"]?></a></li>
+            <? endforeach; ?>
+        </ul>
+    </nav>
+<? endif; ?>
 
 <nav class="bottom-links width">
     <div class="girls">
-        <a href="#" class="title">Девочки</a>
-        <ul>
-            <li><a href="#">Верх</a></li>
-            <li><a href="#">Низ</a></li>
-            <li><a href="#">Куртки</a></li>
-            <li><a href="#">Платья</a></li>
-            <li><a href="#">Комплекты</a></li>
-            <li><a href="#">Нижнее белье</a></li>
-            <li><a href="#">Обувь</a></li>
-        </ul>
+        <a href="/catalog?group=Девочка" class="title">Девочка</a>
+        <? if($this->bottomMenu["girls"]): ?>
+            <ul>
+                <? foreach($this->bottomMenu["girls"] as $item): ?>
+                    <li><a href="/catalog?group=Девочка&cat=<?=$item["id"]?>"><?=$item["name"]?></a></li>
+                <? endforeach; ?>
+            </ul>
+        <? endif; ?>
     </div>
     <div class="boys">
-        <a href="#" class="title">Мальчики</a>
-        <ul>
-            <li><a href="#">Верх</a></li>
-            <li><a href="#">Низ</a></li>
-            <li><a href="#">Куртки</a></li>
-            <li><a href="#">Платья</a></li>
-            <li><a href="#">Комплекты</a></li>
-            <li><a href="#">Нижнее белье</a></li>
-            <li><a href="#">Обувь</a></li>
-        </ul>
+        <a href="/catalog?group=Мальчик" class="title">Мальчик</a>
+        <? if($this->bottomMenu["boys"]): ?>
+            <ul>
+                <? foreach($this->bottomMenu["boys"] as $item): ?>
+                    <li><a href="/catalog?group=Мальчик&cat=<?=$item["id"]?>"><?=$item["name"]?></a></li>
+                <? endforeach; ?>
+            </ul>
+        <? endif; ?>
     </div>
     <div class="babies">
-        <a href="#" class="title">Младенцы</a>
-        <ul>
-            <li><a href="#">Верх</a></li>
-            <li><a href="#">Низ</a></li>
-            <li><a href="#">Боди, ползунки</a></li>
-            <li><a href="#">Комплекты</a></li>
-            <li><a href="#">Нижнее белье</a></li>
-            <li><a href="#">Обувь</a></li>
-        </ul>
+        <a href="/catalog?group=Малыши" class="title">Малыши</a>
+        <? if($this->bottomMenu["childs"]): ?>
+            <ul>
+                <? foreach($this->bottomMenu["childs"] as $item): ?>
+                    <li><a href="/catalog?group=Малыши&cat=<?=$item["id"]?>"><?=$item["name"]?></a></li>
+                <? endforeach; ?>
+            </ul>
+        <? endif; ?>
     </div>
     <div class="brands">
-        <a href="#" class="title">По брендам</a>
-        <ul>
-            <li><a href="#">Senbodulun</a></li>
-            <li><a href="#">Barcarola</a></li>
-            <li><a href="#">Gakkard</a></li>
-            <li><a href="#">Wojcik</a></li>
-            <li><a href="#">Clayeux</a></li>
-            <li><a href="#">Peary Cook</a></li>
-            <li><a href="#">Pulka</a></li>
-        </ul>
+        <a href="#" onclick="return false" class="title">По брендам</a>
+        <? if($this->bottomMenu["brands"]): ?>
+            <ul>
+                <? foreach($this->bottomMenu["brands"] as $item): ?>
+                    <li><a href="/catalog?brand=<?=$item["code"]?>"><?=$item["name"]?></a></li>
+                <? endforeach; ?>
+            </ul>
+        <? endif; ?>
     </div>
 </nav>
 
@@ -148,7 +141,7 @@ $this->widget('application.components.reviews.reviewsWidget');
         <div class="footer width">
             <p class="copyright">© 2013, ООО «<span>Аравелия</span>»</p>
             <p class="adress">Тюмень, ул. Луговая 2-я, 30, ТРЦ “Па-На-Ма”, 3-й этаж</p>
-            <a href="http://amobile-studio.ru" class="a-mobile">Всегда только лучшие идеи</a>
+            <a target="_blank" href="http://amobile-studio.ru" class="a-mobile">Всегда только лучшие идеи</a>
         </div>
     </div>
 </footer>
@@ -183,7 +176,8 @@ $this->widget('application.components.reviews.reviewsWidget');
         </p>
     </div>
     <div class="modal-footer">
-        <a href="/" class="more_button">В клуб</a>
+        <a href="/page/landing" class="more_button">В клуб</a>
+        <a href="/" class="more_button">В интернет-магазин</a>
     </div>
 </div>
 

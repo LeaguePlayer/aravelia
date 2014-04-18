@@ -90,6 +90,10 @@ class Certificate extends EActiveRecord
         ));
     }
 
+    public function translition(){
+        return "Сертификаты";
+    }
+
     public static function model($className=__CLASS__)
     {
         return parent::model($className);

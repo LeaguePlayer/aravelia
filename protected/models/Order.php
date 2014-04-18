@@ -135,7 +135,7 @@ class Order extends EActiveRecord
         if($name == "price"){
             if($this->type == self::getType("sertificat"))
                 return $this->getCertPrice();
-            if($this->type == self::getType("product"))
+            if($this->type == self::getType("product") || $this->type == self::getType("mobile"))
                 return $this->getProductPrice();
             return null;
         }
@@ -190,7 +190,7 @@ class Order extends EActiveRecord
         if(!$this->isNewRecord)
             return true;
         // сохраняем товары
-        if($this->type == self::getType("product")){
+        if($this->type == self::getType("product") || $this->type == self::getType("mobile")){
             $products = json_decode(Yii::app()->request->cookies['products']);
             if($products != null){
                 $p_ids = array();
@@ -229,7 +229,7 @@ class Order extends EActiveRecord
             else {
                 $this->delete();
                 echo json_encode(array(
-                    "success"=>false,
+                    "success"=>true,
                     "mesage"=>"Товары не найдены"
                 ));
                 return true;

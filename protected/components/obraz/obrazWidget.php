@@ -26,7 +26,7 @@ class obrazWidget extends CWidget {
             $data["products"] = Yii::app()->db->createCommand()
                 ->select("id, name, gllr_photos")
                 ->from("tbl_products")
-                ->where("category_code=:cat", array(":cat"=>$category))
+                ->where(array("and","category_code=:cat","id!=:id"), array(":cat"=>$category,":id"=>$id))
                 ->limit(3,$count)
                 ->queryAll();
         }

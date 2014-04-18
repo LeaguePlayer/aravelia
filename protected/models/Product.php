@@ -133,6 +133,8 @@ class Product extends EActiveRecord
 		$criteria->compare('t.group',$this->group,true);
 		$criteria->compare('t.status',$this->status,true);
 		$criteria->compare('t.gllr_photos',$this->gllr_photos);
+		$criteria->compare('t.category_code',$this->category_code);
+		$criteria->compare('t.brand_code',$this->brand_code);
 		$criteria->compare('category.name',$this->searchCat->name,true);
 		$criteria->compare('brand.name',$this->searchBrand->name,true);
 		$criteria->compare('t.create_time',$this->create_time,true);
@@ -175,6 +177,54 @@ class Product extends EActiveRecord
         if($id != null)
             return $status[$id];
         return $status;
+    }
+
+    public function translition(){
+        return "Товары";
+    }
+
+    public static function getGroupData(){
+        $qresult = Yii::app()->db->createCommand("SELECT
+                                                    distinct(p.`group`) `group`
+                                                FROM
+                                                    tbl_products as p")->queryAll();
+        if($qresult){
+            foreach($qresult as $r){
+                $result[$r["group"]] = $r["group"];
+            }
+            return $result;
+        }
+        return null;
+    }
+
+    public static function getCatData(){
+        $qresult = Yii::app()->db->createCommand("SELECT
+	code, name
+FROM
+	tbl_categories as c
+ORDER BY name ASC")->queryAll();
+        if($qresult){
+            foreach($qresult as $r){
+                $result[$r["code"]] = $r["name"];
+            }
+            return $result;
+        }
+        return null;
+    }
+
+    public static function getBrandData(){
+        $qresult = Yii::app()->db->createCommand("SELECT
+	code, name
+FROM
+	tbl_brands as b
+ORDER BY name ASC")->queryAll();
+        if($qresult){
+            foreach($qresult as $r){
+                $result[$r["code"]] = $r["name"];
+            }
+            return $result;
+        }
+        return null;
     }
 
 }

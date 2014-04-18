@@ -52,11 +52,11 @@ $this->title = "Каталог товаров";
                         </select>
                     <? endif; ?>
 
-                    <? if($this->cat["girls"]): ?>
+                    <? if($sizes): ?>
                     <select name="char">
                         <option>Ростовка</option>
-                        <? foreach($this->cat["girls"] as $k=>$v): ?>
-                            <option value="<?=$k?>"><?=$k?></option>
+                        <? foreach($sizes as $s): ?>
+                            <option value="<?=$s["size"]?>"><?=$s["size"]?></option>
                         <? endforeach; ?>
                     </select>
                     <? endif; ?>

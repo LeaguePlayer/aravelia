@@ -17,12 +17,20 @@ $this->breadcrumbs=array(
 
     <?php
         foreach ( $confArray as $counter => $config ) {
-            $row_name = $config->type ? '_'.$config->type.'_row' : '_string_row';
-            echo $this->renderPartial($row_name, array(
-                'form' => $form,
-                'counter' => $counter,
-                'model' => $config
-            ));
+            if($config->param=="index.cat"){
+                $catData = Categorytype::getData();
+                $catData[0] = "Случайная";
+                echo "<label>{$config->label}</label>";
+                echo $form->dropDownList($config, "value", $catData, array("name"=>"Config[{$config->id}][value]"));
+            }
+            else {
+                $row_name = $config->type ? '_'.$config->type.'_row' : '_string_row';
+                echo $this->renderPartial($row_name, array(
+                    'form' => $form,
+                    'counter' => $counter,
+                    'model' => $config
+                ));
+            }
         }
     ?>
 

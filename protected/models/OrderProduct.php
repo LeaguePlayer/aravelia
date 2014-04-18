@@ -51,6 +51,23 @@ class OrderProduct extends EActiveRecord
         );
     }
 
+    public function __get($name){
+        if($name=="size"){
+            $result = Yii::app()->db->createCommand("SELECT
+                                                        c.value value
+                                                    FROM
+                                                        tbl_balances as b
+                                                    LEFT JOIN
+                                                        tbl_characteristics as c
+                                                    ON
+                                                        b.characteristic_code=c.code
+                                                    WHERE
+                                                        b.id={$this->balance_id};")->queryRow();
+            return $result["value"];
+        }
+        return parent::__get($name);
+    }
+
 
 
     public function search()

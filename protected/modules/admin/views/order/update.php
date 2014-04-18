@@ -6,7 +6,7 @@ $this->breadcrumbs=array(
 
 $this->menu=array(
 	array('label'=>'Список', 'url'=>array('list')),
-	array('label'=>'Добавить','url'=>array('create')),
+//	array('label'=>'Добавить','url'=>array('create')),
 );
 ?>
 

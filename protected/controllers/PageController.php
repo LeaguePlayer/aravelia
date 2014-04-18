@@ -34,7 +34,10 @@ class PageController extends FrontController
         else
             throw new CHttpException(404);
 
-        $this->title = $node->name;
+        if ( !empty($node->seo->meta_title) )
+            $this->title = $node->seo->meta_title.' | '.Yii::app()->config->get('app.name');
+        else
+            $this->title = $node->name . ' | ' . Yii::app()->config->get('app.name');
 
         $this->render('landing', $data);
     }
@@ -50,7 +53,10 @@ class PageController extends FrontController
         else
             throw new CHttpException(404);
 
-        $this->title = $node->name;
+        if ( !empty($node->seo->meta_title) )
+            $this->title = $node->seo->meta_title.' | '.Yii::app()->config->get('app.name');
+        else
+            $this->title = $node->name . ' | ' . Yii::app()->config->get('app.name');
 
         if($node->id==3){
             $this->layout = "//layouts/landing";

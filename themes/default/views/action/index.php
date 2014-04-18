@@ -50,7 +50,7 @@
         <div class="video_content">
             <? if($model->video): ?>
                 <div class="video">
-                    <iframe src="//player.vimeo.com/video/<?=($model->video)?>" width="516" height="290" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                    <iframe src="<?=$model->video?>" width="516" height="290" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                 </div>
             <? endif; ?>
             <div class="video_description">

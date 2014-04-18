@@ -18,7 +18,10 @@
                 array(
                     'label'=>'Материалы',
                     'items'=>array(
+                        array('label'=>'Типы категорий', 'url'=>array('/admin/categorytype')),
+                        array('label'=>'Категории', 'url'=>array('/admin/category')),
                         array('label'=>'Товары', 'url'=>array('/admin/product')),
+                        array('label'=>'Размеры', 'url'=>array('/admin/size')),
                         array('label'=>'Сертификаты', 'url'=>array('/admin/certificate')),
                         array('label'=>'Отзывы', 'url'=>array('/admin/review')),
                     ),

@@ -21,6 +21,15 @@
 	
 	// всплывающее окно оформления заказа
 	$("input#order-complete-button").on("click", function(){
+        var priceS = priceSumm();
+        if(priceS>=500){
+            $("#modal-order .more_button").css("float", "right");
+            $("#modal-order .mobile-checkbox").css("display", "block");
+        }
+        else {
+            $("#modal-order .more_button").css("float", "none");
+            $("#modal-order .mobile-checkbox").css("display", "none");
+        }
         $("#big-order-complete-button").addClass('basket');
         var $_modal_order = $("#modal-order");
         $.modal($_modal_order, {
@@ -34,7 +43,7 @@
             autoResize: false,
             onShow: function(dialog){
                 // Валидация формы
-                $("#modal-order input[name='phone']").mask("8(999)999-99-99");
+                $("#modal-order input[name='phone']").mask("8 (999) 999-99-99");
                 $_modal_order.find("form").validate({
                     submitHandler: function(form) {
                         orderSubmit(form);
@@ -49,7 +58,7 @@
                         },
                         phone: {
                             required: true,
-                            maxlength: 16,
+                            maxlength: 20,
                             minlength: 14
                         }
                     },
@@ -93,7 +102,7 @@
 			autoResize: false,
 			onShow: function(dialog){
 				// Валидация формы
-				$("#modal-order-big input[name='phone']").mask("8(999)999-99-99");
+				$("#modal-order-big input[name='phone']").mask("8 (999) 999-99-99");
                 $_modal_order_big.find("form").validate({
                     submitHandler: function(form) {
                         orderSubmit(form);

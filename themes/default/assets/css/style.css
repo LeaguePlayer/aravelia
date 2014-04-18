@@ -258,6 +258,15 @@ header .header .cart-wrap .cart:hover h4 {
   padding: 0px;
   display: inline-block;
 }
+.subitem-title {
+    display: block !important;
+}
+.subitem-title .subitem {
+    width: 450px !important;
+}
+.subitem-title a {
+    font-size: 18px !important;
+}
 .top-menu .top-menu-body ul .item .subitems ul li {
   display: inline-block;
   line-height: 1.3;
@@ -1240,6 +1249,7 @@ footer .footer-wrap .adress {
 .photo-carousel .favorites-carousel-items ul li,
 .photo-carousel .photo-carousel-items ul li {
   margin-right: 10px;
+  min-height: 80px;
 }
 .viewed-carousel .favorites-carousel-items ul li,
 .favorites-carousel .favorites-carousel-items ul li,
@@ -1525,4 +1535,35 @@ footer .footer-wrap .adress {
 #modal-addProduct .modal-footer a:active,
 #modal-addFavorite .modal-footer a:active {
     margin-top: 13px !important;
+}
+
+.goto_back {
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    float: right;
+    padding-left: 30px;
+    margin-right: 3px;
+    margin-top: 5px;
+    font-family: "Open Sans", sans-serif;
+    font-size: 18px;
+    color: #545454;
+    font-weight: 400;
+    text-decoration: none;
+    background: url(../img/left_str_black.png) center left no-repeat;
+}
+.goto_back:hover {
+    text-decoration: underline;
+}
+
+.mobile-checkbox {
+    display: none;
+    width: 130px;
+}
+.mobile-checkbox span {
+    display: inline-block;
+    zoom: 1;
+    *display: inline;
+    vertical-align: top;
+    color: #545454;
 }

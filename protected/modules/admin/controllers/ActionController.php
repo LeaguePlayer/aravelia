@@ -17,6 +17,7 @@ class ActionController extends AdminController
         if(isset($_POST["Action"]))
         {
             $model->attributes = $_POST["Action"];
+            $model->video = $_POST["Action"]["video"];
             $success = $model->save();
             if( $success ) {
                 $this->redirect("/admin/action/list");

@@ -1,6 +1,6 @@
 $(function(){
 
-	$("#sertificat-order-form input[name='phone']").mask("8(999)999-99-99");
+	$("#sertificat-order-form input[name='phone']").mask("8 (999) 999-99-99");
 	// Валидация формы
 	options = {
 		submitHandler: function(form) {
@@ -39,14 +39,23 @@ $(function(){
 	$("#sertificat-order-form").validate(options);
 
 	// изменение количества сертификатов
-	$(".count_sert input").on("change", function(){
-		if($(this).val() < 1)
-			$(this).val(1);
+	$(".count_sert input").on("keyup", function(){
+        if($(this).val() < 1)
+            return;
 		var price = $(this).data("price"),
 			count = $(this).val();
-		$(this).parent().next(".price_sert").children("span").html(number_format(price*count, 0, '.', ' '));
+//		$(this).parent().next(".price_sert").children("span").html(number_format(price*count, 0, '.', ' '));
 		$(".itog_sert_price span").html(number_format(priceCert(), 0, '.', ' '));
 	});
+
+    $(".count_sert input").on("change", function(){
+        if($(this).val() < 1)
+            $(this).val(1);
+        var price = $(this).data("price"),
+            count = $(this).val();
+//		$(this).parent().next(".price_sert").children("span").html(number_format(price*count, 0, '.', ' '));
+        $(".itog_sert_price span").html(number_format(priceCert(), 0, '.', ' '));
+    });
 
 	// вкл\отк сертификата
 	$(".check_sert .switch-check").on("change", function(){

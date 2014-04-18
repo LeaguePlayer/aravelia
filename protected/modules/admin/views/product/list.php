@@ -1,6 +1,6 @@
 <?php
 $this->menu=array(
-	array('label'=>'Добавить','url'=>array('create')),
+//	array('label'=>'Добавить','url'=>array('create')),
 );
 ?>
 
@@ -20,18 +20,24 @@ $this->widget('bootstrap.widgets.TbGridView',array(
 	'columns'=>array(
 		'article',
 		'name',
-		'group',
+        array(
+            'name'=>'group',
+            'value'=>'$data->group',
+            'filter'=>Product::getGroupData(),
+        ),
         array(
             'name'=>'gllr_photos',
             'value'=>'$data->issetPhoto',
         ),
         array(
-            'name'=>'category.name',
-            'filter' => CHtml::activeTextField($model->searchCat, 'name')
+            'name'=>'category_code',
+            'value'=>'$data->category->name',
+            'filter'=>Product::getCatData(),
         ),
         array(
-            'name'=>'brand.name',
-            'filter' => CHtml::activeTextField($model->searchBrand, 'name')
+            'name'=>'brand_code',
+            'value'=>'$data->brand->name',
+            'filter'=>Product::getBrandData(),
         ),
 //		array(
 //			'name'=>'create_time',
@@ -50,7 +56,7 @@ $this->widget('bootstrap.widgets.TbGridView',array(
         ),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
-            'template'=>'{update} {delete}',
+            'template'=>'{update}',
 		),
 	),
 )); ?>

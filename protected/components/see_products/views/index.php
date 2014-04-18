@@ -11,7 +11,7 @@ if($products != null):
         <div class="viewed-carousel-items">
             <ul>
                 <? foreach($products as $p): ?>
-                <li><a title="<?=$p["name"]?>" href="/product?id=<?=$p["id"]?>"><img src="<?=Product::getMainPhotoUrl($p["gllr_photos"])?>" alt="" width="80" height="80" ></a></li>
+                <li><a title="<?=$p["name"]?>" href="/product?id=<?=$p["id"]?>"><img src="<?=Product::getMainPhotoUrl($p["gllr_photos"])?>" alt="" width="80" ></a></li>
                 <? endforeach; ?>
             </ul>
         </div>

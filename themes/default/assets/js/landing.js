@@ -43,7 +43,7 @@ $(function(){
 		}
 	};
 	$(".order_club_form form").validate(options);
-	$(".order_club_form input[name='phone']").mask("8(999)999-99-99");
+	$(".order_club_form input[name='phone']").mask("8 (999) 999-99-99");
 
     var clubSubmit = function(form){
         ajaxload();

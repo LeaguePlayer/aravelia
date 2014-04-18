@@ -26,4 +26,28 @@ class ProductController extends AdminController
             'model' => $model,
         ));
     }
+
+    public function actionUpdate($id){
+        $model = Product::model()->findByPk($id);
+        if(!$model)
+            throw new CHttpException(404);
+
+        if (isset($_POST['Product']['deletePhoto'])) {
+            $behaviorName = 'imgBehavior'.ucfirst( $_POST['Product']['deletePhoto'] );
+            $model->{$behaviorName}->deletePhoto();
+            if ( Yii::app()->request->isAjaxRequest ) {
+                Yii::app()->end();
+            }
+        }
+
+        if(isset($_POST['Product']))
+        {
+            $model->attributes = $_POST['Product'];
+            $success = $model->save();
+            if( $success ) {
+                $this->redirect('/admin/product/update/id/'.$id);
+            }
+        }
+        $this->render('update',array('model' => $model));
+    }
 }

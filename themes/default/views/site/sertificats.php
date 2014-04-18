@@ -51,10 +51,13 @@
             <form id="sertificat-order-form" method="post">
                 <input type="text" name="name" placeholder="Ваше имя">
                 <input type="text" name="phone" placeholder="Телефон">
-                <select name="address">
-                    <option value="Забрать на Луговая 2а">Забрать на Луговая 2а</option>
-                    <option value="Забрать на Московском">Забрать на Московском</option>
-                </select>
+                <? if($address): ?>
+                    <select name="address">
+                        <? foreach($address as $a): ?>
+                        <option value="Забрать на <?=$a?>">Забрать на <?=$a?></option>
+                        <? endforeach; ?>
+                    </select>
+                <? endif; ?>
                 <input type="submit" class="more_button" value="Оформить">
             </form>
         </div>

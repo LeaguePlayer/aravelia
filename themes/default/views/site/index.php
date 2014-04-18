@@ -21,72 +21,20 @@
             </div>
         </a>
     </nav>
+    <? if($products): ?>
     <div class="clothes width">
-        <a href="#" class="item">
-            <img src="/media/images/item1.jpg">
+        <? foreach($products as $p): ?>
+        <a href="/product?id=<?=$p["id"]?>" class="item">
+            <img src="<?=Product::getMainPhotoUrl($p["gllr_photos"],"medium")?>">
             <div class="item-title">
                 <div>
-                    <h5>Толстовка Barcola</h5>
+                    <h5><?=$p["name"]?></h5>
                 </div>
             </div>
         </a>
-        <a href="#" class="item">
-            <img src="/media/images/item2.jpg">
-            <div class="item-title">
-                <div>
-                    <h5>Толстовка Barcola</h5>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="item">
-            <img src="/media/images/item3.jpg">
-            <div class="item-title">
-                <div>
-                    <h5>Толстовка Barcola</h5>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="item">
-            <img src="/media/images/item4.jpg">
-            <div class="item-title">
-                <div>
-                    <h5>Толстовка Barcola</h5>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="item">
-            <img src="/media/images/item5.jpg">
-            <div class="item-title">
-                <div>
-                    <h5>Толстовка Barcola</h5>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="item">
-            <img src="/media/images/item6.jpg">
-            <div class="item-title">
-                <div>
-                    <h5>Толстовка Barcola</h5>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="item">
-            <img src="/media/images/item7.jpg">
-            <div class="item-title">
-                <div>
-                    <h5>Толстовка Barcola</h5>
-                </div>
-            </div>
-        </a>
-        <a href="#" class="item">
-            <img src="/media/images/item8.jpg">
-            <div class="item-title">
-                <div>
-                    <h5>Толстовка Barcola</h5>
-                </div>
-            </div>
-        </a>
+        <? endforeach; ?>
     </div>
+    <? endif; ?>
 </section>
 
 <section class="activity width">

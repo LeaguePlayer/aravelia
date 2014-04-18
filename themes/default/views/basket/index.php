@@ -27,7 +27,7 @@ if(!Yii::app()->request->isAjaxRequest)
                     $price += $p["price"];
             ?>
             <tr>
-                <td class="img_product"><img src="<?=Product::getMainPhotoUrl($p["gllr_photos"], "small")?>" width="40" height="40"></td>
+                <td class="img_product"><img src="<?=Product::getMainPhotoUrl($p["gllr_photos"], "small")?>" width="40"></td>
                 <td class="link_product"><a target="_blank" href="/product?id=<?=$p["id"]?>"><?=$p["name"]?></a></td>
                 <td class="feature_product"><?=$p["group"]?>, <?=$p["country"]?>, <?=$p["value"]?></td>
                 <td class="count_product">
@@ -47,7 +47,7 @@ if(!Yii::app()->request->isAjaxRequest)
             <input id="order-complete-button" class="more_button" type="submit" value="Оформить заказ">
             <p class="order-complete-text">
                 <img src="/media/images/warning.png" alt="">
-                Чтобы воспользоваться услугой <a target="_blank" href="/mobile.html">Мобильный продавец</a>, необходимо<br> добавить товаров на сумму более 500 руб.
+                Чтобы воспользоваться услугой <a target="_blank" href="/page/mobile">Мобильный продавец</a>, необходимо<br> добавить товаров на сумму более 500 руб.
             </p>
             <div class="clearfix"></div>
         </div>

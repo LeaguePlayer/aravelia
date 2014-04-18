@@ -35,7 +35,6 @@ class Action extends EActiveRecord
             array('name, wswg_desc', 'required'),
             array('gllr_photos, gllr_concurs', 'numerical', 'integerOnly'=>true),
             array('name', 'length', 'max'=>255),
-            array('video', 'length', 'max'=>512),
             array('wswg_concurs_desc, dt_date, create_time, update_time', 'safe'),
             // The following rule is used by search().
             array('id, name, wswg_desc, wswg_concurs_desc, img_photo, video, gllr_photos, gllr_concurs, dt_date, create_time, update_time', 'safe', 'on'=>'search'),
@@ -67,7 +66,7 @@ class Action extends EActiveRecord
             'wswg_desc' => 'Описание события',
             'wswg_concurs_desc' => 'Описание конкурса',
             'img_photo' => 'Изображение',
-            'video' => 'ID Видео из Vimeo.com',
+            'video' => 'Ссылка на видео',
             'gllr_photos' => 'Галерея фоток события',
             'gllr_concurs' => 'Галерея конкурсных работ',
             'dt_date' => 'Дата проведения',
@@ -138,6 +137,7 @@ class Action extends EActiveRecord
     public function search()
     {
         $criteria=new CDbCriteria;
+        $criteria->order = "dt_date DESC";
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('wswg_desc',$this->wswg_desc,true);

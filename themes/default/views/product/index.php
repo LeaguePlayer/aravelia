@@ -4,6 +4,13 @@ $this->title = $model->name;
 ?>
 
 <section class="content width">
+    <?
+    if(isset($_SERVER["HTTP_REFERER"])):
+    ?>
+        <a href="<?=$_SERVER["HTTP_REFERER"]?>" class="goto_back">Вернуться назад</a>
+    <?
+    endif;
+    ?>
     <h1><?=$model->name?></h1>
     <div class="page left shadow product">
         <div class="product_top">
@@ -12,9 +19,9 @@ $this->title = $model->name;
                     foreach($photos as $k => $p):
                     ?>
                         <? if($k===0): ?>
-                            <a class="fancybox" rel="photo" href="<?=$p->getUrl("big")?>"><img src="<?=$p->getUrl("medium")?>" alt="<?=$p->name?>"></a>
+                            <a title="<?=$p->name?>" class="fancybox" rel="photo" href="<?=$p->getUrl("big")?>"><img src="<?=$p->getUrl("medium")?>" alt="<?=$p->name?>"></a>
                         <? else: ?>
-                            <a class="fancybox" rel="photo" href="<?=$p->getUrl("big")?>"><img width="75" src="<?=$p->getUrl("small")?>" alt="<?=$p->name?>"></a>
+                            <a title="<?=$p->name?>" class="fancybox" rel="photo" href="<?=$p->getUrl("big")?>"><img width="75" src="<?=$p->getUrl("small")?>" alt="<?=$p->name?>"></a>
                     <?
                         endif;
                     endforeach;
@@ -28,6 +35,14 @@ $this->title = $model->name;
             <div class="product_feature">
                 <div class="product_text">
                     <p>Артикул: <?=$model->article?></p>
+                    <p>Категория: <?=$model->category->name?></p>
+                    <? if($sizes_info): ?>
+                        <p id="sizes_info" style="display: none">
+                            <? foreach($sizes_info as $s): ?>
+                                <span style="display: none" id="size-<?=$s["size"]?>">Размер: <?=$s["size"]?><br><?=$s["desc"]?></span>
+                            <? endforeach; ?>
+                        </p>
+                    <? endif; ?>
                     <p><?=$model->wswg_desc?></p>
                 </div>
                 <div class="product_price">
@@ -67,20 +82,17 @@ $this->title = $model->name;
             <div id="product_info" class="tabs-content">
                 <div id="info">
                     <p>
-                        1 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                        <?=Yii::app()->config->get("product.info")?>
                     </p>
                 </div>
                 <div id="delivery">
                     <p>
-                        2 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                        <?=Yii::app()->config->get("product.delivery")?>
                     </p>
                 </div>
                 <div id="mobile">
                     <p>
-                        3 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                        <?=Yii::app()->config->get("product.mobile")?>
                     </p>
                 </div>
             </div>
