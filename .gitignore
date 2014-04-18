@@ -4,7 +4,7 @@ Capfile
 #---
 
 /.idea
-
+/exchange_data
 framework
 /protected/config/environment/params-local.php
 /uploads
