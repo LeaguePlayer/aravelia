@@ -24,8 +24,8 @@ class GalleryController extends CController
      * On success returns 'OK'
      */
 
-    public function actionChangeOriginalSize($size=1000){
-        $photos=GalleryPhoto::model()->findAll();
+    public function actionChangeOriginalSize($size=1000,$id=0){
+        $photos=GalleryPhoto::model()->findAll('id>:id',array(':id'=>$id));
         foreach ($photos as $key => $item) {
             $path=YiiBase::getPathOfAlias('webroot').$item->getUrl();
             //var_dump($path);
