@@ -152,7 +152,7 @@ class GalleryPhoto extends CActiveRecord
             $image->save($this->galleryDir . '/' . $this->getFileName($version) . '.' . $this->galleryExt);
         }*/
         //save image in original size
-        Yii::app()->phpThumb->create($path)->save($this->galleryDir . '/' . $this->getFileName('') . '.' . $this->ext);
+        Yii::app()->phpThumb->create($path)->resize(1000)->save($this->galleryDir . '/' . $this->getFileName('') . '.' . $this->ext);
         //create image preview for gallery manager
         Yii::app()->phpThumb->create($path)->resize(300)->save($this->galleryDir . '/_' . $this->getFileName('') . '.' . $this->ext);
 
@@ -163,6 +163,10 @@ class GalleryPhoto extends CActiveRecord
             }
             $image->save($this->galleryDir . '/' . $this->getFileName($version) . '.' . $this->ext);
         }
+    }
+
+    public function changeOriginalSize($size=1000,$path){
+        Yii::app()->phpThumb->create($path)->resize($size)->save($this->galleryDir . '/' . $this->getFileName('') . '.' . $this->ext);
     }
 
     public function delete()

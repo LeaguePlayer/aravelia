@@ -15,7 +15,7 @@ class GalleryController extends CController
     public function filters()
     {
         return array(
-            'postOnly + delete, ajaxUpload, order, changeData',
+            'postOnly + delete, ajaxUpload, order, changeData','changeOriginalSize'
         );
     }
 
@@ -98,6 +98,17 @@ class GalleryController extends CController
      * On success returns JSON array od objects with new image info.
      * @throws CHttpException
      */
+
+    public function actionChangeOriginalSize($size=1000){
+        die();
+        $photos=GalleryPhoto::model()->findAll()
+        foreach ($photos as $key => $item) {
+            $item->changeOriginalSize($size);
+        }
+        echo "Конграц, размер оригинальных фотографий изменен пропорционально ширины на $size";
+    }
+
+
     public function actionChangeData()
     {
         if (!isset($_POST['photo'])) throw new CHttpException(400, 'Nothing, to save');

@@ -155,7 +155,8 @@ class GalleryPhoto extends CActiveRecord
         }*/
 
         //save image in original size
-        Yii::app()->phpThumb->create($path)->save($this->galleryDir . '/' . $this->getFileName('') . '.' . $this->galleryExt);
+        Yii::app()->phpThumb->create($path)->resize(1000)->save($this->galleryDir . '/_122122122' . $this->getFileName('') . '.' . $this->galleryExt);
+        die('111111111');
         //create image preview for gallery manager
         Yii::app()->phpThumb->create($path)->resize(300)->save($this->galleryDir . '/_' . $this->getFileName('') . '.' . $this->galleryExt);
 

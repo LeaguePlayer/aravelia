@@ -12,17 +12,28 @@
 
 class GalleryController extends CController
 {
-    public function filters()
-    {
-        return array(
-            'postOnly + delete, ajaxUpload, order, changeData, changeMain',
-        );
-    }
+    // public function filters()
+    // {
+    //     return array(
+    //         'postOnly + delete, ajaxUpload, order, changeData, changeMain','changeOriginalSize',
+    //     );
+    // }
 
     /**
      * Removes image with ids specified in post request.
      * On success returns 'OK'
      */
+
+    public function actionChangeOriginalSize($size=1000){
+        $photos=GalleryPhoto::model()->findAll();
+        foreach ($photos as $key => $item) {
+            $path=YiiBase::getPathOfAlias('webroot').$item->getUrl();
+            //var_dump($path);
+            $item->changeOriginalSize($size,$path);
+        }
+        echo "Конграц, размер оригинальных фотографий изменен пропорционально ширины на $size";
+    }
+
     public function actionDelete()
     {
         $id = $_POST['id'];
